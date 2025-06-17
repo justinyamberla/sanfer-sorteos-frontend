@@ -4,7 +4,7 @@ export const AwardsSection = () => {
     const ticketNumbers = [1011, 2012, 3073, 1404, 5445, 6406, 7047, 8048, 3909, 1001]; // ejemplo
 
     return (
-        <section className="py-5 text-center">
+        <section id="awardsSection" className="py-5 text-center">
             <div className="container">
                 <h2 className="fw-bold mb-3">PREMIOS INSTANTÁNEOS</h2>
                 <p className="mb-5">

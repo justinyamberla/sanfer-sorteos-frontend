@@ -4,6 +4,7 @@ import TicketsSection from "@/components/home/TicketsSection";
 import AwardsSection from "@/components/home/AwardsSection";
 import TicketCheckSection from "@/components/home/TicketCheckSection";
 import AdsSection from "@/components/home/AdsSection";
+import LastActivitiesSection from "@/components/home/LastActivitiesSection";
 
 export default function Home() {
     return (
@@ -14,6 +15,7 @@ export default function Home() {
             <AwardsSection />
             <TicketCheckSection />
             <AdsSection />
+            <LastActivitiesSection />
         </div>
     );
 }

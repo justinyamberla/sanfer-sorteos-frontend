@@ -2,7 +2,7 @@
 
 export const AdsSection = () => {
     return (
-        <section className="py-5">
+        <section id="adsSection" className="py-5">
             <div className="container">
                 {/* Bloque Publicitario 1 */}
                 <div className="mb-5">
