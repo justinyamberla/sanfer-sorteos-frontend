@@ -1,8 +1,8 @@
 'use client'
 
-import {useEffect} from "react";
+import { useEffect } from "react";
 
-const BootstrapJS = () => {
+const BootstrapJsBundle = () => {
 
     useEffect(() => {
         import("bootstrap/dist/js/bootstrap.bundle");
@@ -14,4 +14,4 @@ const BootstrapJS = () => {
     );
 }
 
-export default BootstrapJS;
+export default BootstrapJsBundle;

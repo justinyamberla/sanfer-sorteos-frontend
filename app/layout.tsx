@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/custom.scss";
-import BootstrapJS from "@/components/BootstrapJS";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+import BootstrapJsBundle from "@/components/BootstrapJsBundle";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -18,9 +21,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     return (
         <html lang="en">
         <body className={`${inter.className}`}>
-        <BootstrapJS />
+        <BootstrapJsBundle />
         <Navbar />
         {children}
+        <Footer />
         </body>
         </html>
     );

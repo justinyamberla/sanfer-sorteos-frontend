@@ -2,7 +2,7 @@
 
 export const Navbar = () => {
     return (
-        <nav className="navbar navbar-expand-lg bg-light shadow">
+        <nav className="navbar navbar-expand-lg shadow sticky-top bg-body-tertiary">
             <div className="container">
                 {/* Logo a la izquierda */}
                 <a className="navbar-brand fw-bold d-flex justify-content-center align-items-center" href="#">
