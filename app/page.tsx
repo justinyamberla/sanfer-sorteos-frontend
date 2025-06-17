@@ -1,7 +1,7 @@
 export default function Home() {
     return (
-        <div className="bg-white">
-            <button className="btn btn-primary text-white shadow mx-5 my-5">
+        <div className="bg-white container">
+            <button className="btn btn-primary text-white shadow">
                 Hola mundo
             </button>
             <button type="button" className="btn btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">
