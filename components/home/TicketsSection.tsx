@@ -50,7 +50,7 @@ export const TicketsSection = () => {
                 </div>
 
                 {/* Sección personalizada de cantidad */}
-                <div className="bg-white p-4 rounded shadow">
+                <div className="bg-white p-4 rounded border shadow">
                     <h4 className="fw-bold mb-3">¿Más números?</h4>
                     <form className="d-flex align-items-center flex-wrap gap-3">
                         <label className="mb-0">Agrega la cantidad de boletos que deseas comprar:</label>

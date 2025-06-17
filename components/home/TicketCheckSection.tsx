@@ -2,7 +2,7 @@
 
 export const TicketCheckSection = () => {
     return (
-        <section className="py-5 bg-dark text-white rounded-4">
+        <section className="py-5 mb-4 bg-dark text-white rounded-4">
             <div className="container">
                 <div className="p-4 d-flex flex-column justify-content-center align-items-center">
                     <h2 className="fw-bold mb-3">CONSULTA TUS NÚMEROS</h2>
