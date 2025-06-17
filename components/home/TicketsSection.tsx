@@ -56,7 +56,7 @@ export const TicketsSection = () => {
                         <label className="mb-0">Agrega la cantidad de boletos que deseas comprar:</label>
                         <input
                             type="number"
-                            className="form-control w-auto"
+                            className="form-control w-50"
                             min="1"
                             placeholder="Ej. 45"
                         />

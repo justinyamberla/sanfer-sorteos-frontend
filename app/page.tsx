@@ -2,6 +2,7 @@ import MainSection from "@/components/home/MainSection";
 import InstructionsSection from "@/components/home/InstructionsSection";
 import TicketsSection from "@/components/home/TicketsSection";
 import AwardsSection from "@/components/home/AwardsSection";
+import TicketCheckSection from "@/components/home/TicketCheckSection";
 
 export default function Home() {
     return (
@@ -10,6 +11,7 @@ export default function Home() {
             <InstructionsSection />
             <TicketsSection />
             <AwardsSection />
+            <TicketCheckSection />
         </div>
     );
 }
