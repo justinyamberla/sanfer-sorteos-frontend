@@ -5,7 +5,7 @@ export const TicketsSection = () => {
         <section className="py-5">
             <div className="container">
                 <h2 className="text-center fw-bold mb-2">ADQUIERE TUS BOLETOS</h2>
-                <p className="text-center mb-5 fs-5">El valor de cada boleto es de <strong>$1 USD</strong>.</p>
+                <p className="text-center mb-5">El valor de cada boleto es de <strong>$1 USD</strong>.</p>
 
                 {/* Cards de boletos */}
                 <div className="row justify-content-center mb-3">
