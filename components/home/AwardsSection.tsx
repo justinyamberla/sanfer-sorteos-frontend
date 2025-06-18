@@ -14,7 +14,7 @@ export const AwardsSection = () => {
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-4">
                     {ticketNumbers.map((number, index) => (
                         <div className="col" key={index}>
-                            <div className="card shadow border-dark text-center p-3 h-100">
+                            <div className="card bg-white shadow border-dark text-center p-3 h-100">
                                 <div className="card-body d-flex align-items-center justify-content-center">
                                     <span className="fw-bold fs-4 text-dark">{number}</span>
                                 </div>

@@ -7,18 +7,20 @@ export const TicketCheckSection = () => {
                 <div className="p-4 d-flex flex-column justify-content-center align-items-center">
                     <h2 className="fw-bold mb-3">CONSULTA TUS NÚMEROS</h2>
                     <p className="mb-4">Ingresa tu correo electrónico para consultar tus números</p>
-                    <form className="d-flex flex-wrap align-items-center justify-content-center gap-3 w-75">
-                        <div className="input-group mb-3">
+
+                    <form className="row w-100 justify-content-center">
+                        <div className="col-12 col-md-6 mb-2">
                             <input
-                                type="text"
+                                type="email"
                                 className="form-control"
                                 placeholder="Correo electrónico"
-                                aria-label="Recipient’s username"
-                                aria-describedby="button-addon2"
+                                aria-label="Correo electrónico"
                             />
-                                <button className="btn btn-primary text-white" type="button" id="button-addon2">
-                                    Consultar
-                                </button>
+                        </div>
+                        <div className="col-12 col-md-auto">
+                            <button className="btn btn-primary text-white w-100" type="button">
+                                Consultar
+                            </button>
                         </div>
                     </form>
                 </div>

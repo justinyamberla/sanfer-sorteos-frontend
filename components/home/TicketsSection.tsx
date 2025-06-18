@@ -49,21 +49,30 @@ export const TicketsSection = () => {
                     </div>
                 </div>
 
-                {/* Sección personalizada de cantidad */}
                 <div className="bg-white p-4 rounded border shadow">
                     <h4 className="fw-bold mb-3">¿Más números?</h4>
-                    <form className="d-flex align-items-center flex-wrap gap-3">
-                        <label className="mb-0">Agrega la cantidad de boletos que deseas comprar:</label>
-                        <input
-                            type="number"
-                            className="form-control w-50"
-                            min="1"
-                            placeholder="Ej. 45"
-                        />
-                        <button className="btn btn-success text-white">Comprar</button>
+
+                    <form className="row align-items-center">
+                        <div className="col-12 col-md-auto mb-2 mb-md-0">
+                            <label className="form-label mb-0">
+                                Agrega la cantidad de boletos que deseas comprar:
+                            </label>
+                        </div>
+
+                        <div className="col-12 col-md-4 mb-2 mb-md-0">
+                            <input
+                                type="number"
+                                className="form-control"
+                                min="1"
+                                placeholder="Ej. 45"
+                            />
+                        </div>
+
+                        <div className="col-12 col-md-auto">
+                            <button className="btn btn-success w-100 text-white">Comprar</button>
+                        </div>
                     </form>
                 </div>
-
             </div>
         </section>
     );

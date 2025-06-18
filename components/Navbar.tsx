@@ -24,7 +24,7 @@ export const Navbar = () => {
                 </button>
 
                 {/* Enlaces centrados */}
-                <div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+                {/*<div className="collapse navbar-collapse justify-content-center" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
                             <a className="nav-link active fw-semibold" aria-current="page" href="#">Inicio</a>
@@ -39,7 +39,7 @@ export const Navbar = () => {
                             <a className="nav-link" href="#">Contacto</a>
                         </li>
                     </ul>
-                </div>
+                </div>*/}
             </div>
         </nav>
     );
