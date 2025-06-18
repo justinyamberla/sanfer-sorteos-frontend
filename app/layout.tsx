@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/custom.scss";
+import 'jquery';
+import 'popper.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import BootstrapJsBundle from "@/components/BootstrapJsBundle";
