@@ -11,7 +11,7 @@ export default function Home() {
     return (
         <div className="min-vh-100 w-100 container">
             <MainSection />
-            <FinishedActivitySection />
+            {/*<FinishedActivitySection />*/}
             <InstructionsSection />
             <TicketsPurchaseSection />
             <AwardsSection />

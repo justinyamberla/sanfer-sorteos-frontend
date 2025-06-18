@@ -1,17 +1,30 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import PersonalInfoForm from "@/components/checkout/PersonalInfoForm";
+import PaymentInfoForm from "@/components/checkout/PaymentInfoForm";
+import OrderCard from "@/components/checkout/OrderCard";
 
 export const CheckoutPage = () => {
 
     const searchParams = useSearchParams();
-    console.log(searchParams.get("quantity"));
+    const quantity = searchParams.get("quantity");
 
     return (
-        <div className="min-vh-100 w-100 container">
-            {searchParams.get("quantity") ?? "hola mundo"}
-            <PersonalInfoForm />
+        <div className="container py-5">
+            <h2 className="fw-bold mb-4 text-center">CHECKOUT</h2>
+            <div className="row gy-4 flex-column-reverse flex-lg-row">
+                {/* Columna izquierda: Formulario + métodos de pago */}
+                <div className="col-lg-8">
+                    <div className="mb-4">
+                        <PaymentInfoForm />
+                    </div>
+                </div>
+
+                {/* Columna derecha: Resumen del pedido */}
+                <div className="col-lg-4">
+                    <OrderCard quantity={quantity} />
+                </div>
+            </div>
         </div>
     );
 }
