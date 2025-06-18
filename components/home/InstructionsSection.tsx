@@ -67,33 +67,33 @@ export const InstructionsSection = () => {
                 </div>
             </div>
 
-            <Modal show={showModal} onHide={() => setShowModal(false)} scrollable>
+            <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" scrollable>
                 <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
+                    <Modal.Title>Tutorial de pago</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="card bg-white shadow border-0 h-100">
+                    <h5 className="text-center">Pago por transferencia</h5>
+                    <div className="bg-white shadow border-0 h-100 mb-3 text-center">
                         <Image
                             src={actividad}
-                            height={700}
-                            alt={`Actividad`}
-                            className="card-img-top"
+                            alt="Actividad"
+                            width={500}
+                            style={{ height: "auto", maxWidth: "100%" }}
                         />
-                        {/* <iframe className="card-img-top" src="..." /> <-- futuro reemplazo si deseas */}
-                        <div className="card-body">
-                            <h5 className="card-title">Actividad</h5>
-                            <p className="card-text">
-                                Descripción breve de la actividad número. Puedes modificar esto con más info.
-                            </p>
-                        </div>
+                    </div>
+                    <h5 className="text-center">Pago por tarjeta</h5>
+                    <div className="bg-white shadow border-0 h-100 mb-3 text-center">
+                        <Image
+                            src={actividad}
+                            alt="Actividad"
+                            width={500}
+                            style={{ height: "auto", maxWidth: "100%" }}
+                        />
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={() => setShowModal(false)}>
-                        Close
-                    </Button>
-                    <Button variant="primary" className="text-white" onClick={() => setShowModal(false)}>
-                        Save Changes
+                        Cerrar
                     </Button>
                 </Modal.Footer>
             </Modal>

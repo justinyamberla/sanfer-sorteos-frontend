@@ -1,6 +1,8 @@
 'use client';
 
-export const TicketsSection = () => {
+import Link from "next/link";
+
+export const TicketsPurchaseSection = () => {
     return (
         <section id="ticketsSection" className="py-5">
             <div className="container">
@@ -17,7 +19,7 @@ export const TicketsSection = () => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">$10 USD</h3>
-                                <button className="btn btn-dark">Comprar</button>
+                                <Link className="btn btn-dark" href={"/checkout?quantity=10"}>Comprar</Link>
                             </div>
                         </div>
                     </div>
@@ -30,7 +32,7 @@ export const TicketsSection = () => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">$20 USD</h3>
-                                <button className="btn btn-dark text-white">Comprar</button>
+                                <Link className="btn btn-dark" href={"/checkout?quantity=20"}>Comprar</Link>
                             </div>
                         </div>
                     </div>
@@ -43,7 +45,7 @@ export const TicketsSection = () => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">$30 USD</h3>
-                                <button className="btn btn-dark">Comprar</button>
+                                <Link className="btn btn-dark" href={"/checkout?quantity=30"}>Comprar</Link>
                             </div>
                         </div>
                     </div>
@@ -78,4 +80,4 @@ export const TicketsSection = () => {
     );
 };
 
-export default TicketsSection;
+export default TicketsPurchaseSection;

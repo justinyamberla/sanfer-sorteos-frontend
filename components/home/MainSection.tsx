@@ -43,6 +43,7 @@ export const MainSection = ({props}) => {
                                         src={exampleImg}
                                         alt="Premios del sorteo"
                                         className="img-fluid rounded shadow"
+                                        priority
                                     />
                                 </div>
                                 <div className="carousel-item">
@@ -50,6 +51,7 @@ export const MainSection = ({props}) => {
                                         src={exampleImg}
                                         alt="Premios del sorteo"
                                         className="img-fluid rounded shadow"
+                                        priority
                                     />
                                 </div>
                                 <div className="carousel-item">
@@ -57,6 +59,7 @@ export const MainSection = ({props}) => {
                                         src={exampleImg}
                                         alt="Premios del sorteo"
                                         className="img-fluid rounded shadow"
+                                        priority
                                     />
                                 </div>
                             </div>

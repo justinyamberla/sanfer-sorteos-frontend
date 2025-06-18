@@ -18,6 +18,7 @@ export const LastActivitiesSection = () => {
                             <div className="card bg-white shadow border-0 h-100">
                                 <Image
                                     src={actividad}
+                                    width={500}
                                     height={700}
                                     alt={`Actividad ${item}`}
                                     className="card-img-top"

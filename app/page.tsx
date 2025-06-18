@@ -1,6 +1,6 @@
 import MainSection from "@/components/home/MainSection";
 import InstructionsSection from "@/components/home/InstructionsSection";
-import TicketsSection from "@/components/home/TicketsSection";
+import TicketsPurchaseSection from "@/components/home/TicketsPurchaseSection";
 import AwardsSection from "@/components/home/AwardsSection";
 import TicketCheckSection from "@/components/home/TicketCheckSection";
 import AdsSection from "@/components/home/AdsSection";
@@ -11,7 +11,7 @@ export default function Home() {
         <div className="min-vh-100 w-100 container">
             <MainSection />
             <InstructionsSection />
-            <TicketsSection />
+            <TicketsPurchaseSection />
             <AwardsSection />
             <TicketCheckSection />
             <AdsSection />
