@@ -5,7 +5,7 @@ export const Navbar = () => {
         <nav className="navbar navbar-expand-lg shadow sticky-top bg-body-tertiary">
             <div className="container">
                 {/* Logo a la izquierda */}
-                <a className="navbar-brand fw-bold d-flex justify-content-center align-items-center" href="#">
+                <a className="navbar-brand fw-bold d-flex justify-content-center align-items-center" href="/">
                     <img src="/images/logo.png" alt="Logo" width="50" height="50" className="d-inline-block align-text-top me-2" />
                     MiSorteo
                 </a>
