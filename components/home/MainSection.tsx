@@ -28,7 +28,7 @@ export const MainSection = ({props}) => {
 
                         {/* Botones */}
                         <div className="d-flex mt-5 gap-3">
-                            <a type="button" href="#ticketsSection" className="btn btn-dark px-4 shadow">Comprar boletos</a>
+                            <a type="button" href="#instructionsSection" className="btn btn-dark px-4 shadow">Comprar boletos</a>
                             <button className="btn btn-outline-primary px-4">Ver sorteo</button>
                         </div>
                     </div>
