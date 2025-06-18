@@ -1,8 +1,24 @@
 'use client';
 
 import Link from "next/link";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const TicketsPurchaseSection = () => {
+
+    const router = useRouter();
+    const [customQuantity, setCustomQuantity] = useState<number | string>(1);
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!customQuantity || customQuantity <= 0) {
+            alert("Por favor, ingresa una cantidad válida de boletos.");
+            return;
+        }
+
+        router.push(`/checkout?quantity=${customQuantity}`);
+    };
+
     return (
         <section id="ticketsSection" className="py-5">
             <div className="container">
@@ -54,7 +70,7 @@ export const TicketsPurchaseSection = () => {
                 <div className="bg-white p-4 rounded border shadow">
                     <h4 className="fw-bold mb-3">¿Más números?</h4>
 
-                    <form className="row align-items-center">
+                    <form className="row align-items-center" onSubmit={handleSubmit}>
                         <div className="col-12 col-md-auto mb-2 mb-md-0">
                             <label className="form-label mb-0">
                                 Agrega la cantidad de boletos que deseas comprar:
@@ -67,11 +83,12 @@ export const TicketsPurchaseSection = () => {
                                 className="form-control"
                                 min="1"
                                 placeholder="Ej. 45"
+                                onChange={(e) => setCustomQuantity(Number(e.target.value))}
                             />
                         </div>
 
                         <div className="col-12 col-md-auto">
-                            <button className="btn btn-success w-100 text-white">Comprar</button>
+                            <button type="submit" className="btn btn-success w-100 text-white">Comprar</button>
                         </div>
                     </form>
                 </div>
