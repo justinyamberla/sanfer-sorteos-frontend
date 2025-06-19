@@ -1,16 +1,58 @@
 "use client";
 
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCheckout } from "@/context/CheckoutContext";
+import { locations } from "@/lib/locations";
+import type { FormData } from "@/lib/types";
 
 export const PaymentInfoForm = () => {
+
+    const router = useRouter();
+    const { setData } = useCheckout();
+
+    const [provincia, setProvincia] = useState("");
+    const [ciudad, setCiudad] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("transferencia");
+
+    const selectedProvincia = locations.find((loc) => loc.provincia === provincia);
+
+    const handleProvinciaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setProvincia(e.target.value);
+        setCiudad("");
+    };
 
     const handlePaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPaymentMethod(e.target.value);
     };
 
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = {
+            nombres: "Justin Alexis",
+            apellidos: "Yamberla Marcillo",
+            email: "justin@correo.com",
+            telefono: "0987654321",
+            direccion: "Iluman, Barrio Sta. Teresita",
+            provincia,
+            ciudad,
+            recibirNotificaciones: true,
+            metodoPago: paymentMethod as string,
+        };
+
+        setData(formData as FormData);
+
+        if (paymentMethod === "transferencia") {
+            router.push("/payment/summary");
+        } else {
+            // ejemplo: Payphone
+            alert("Redirigiendo a Payphone...");
+        }
+    };
+
     return (
-        <form className="row g-2 p-4 bg-white shadow rounded-4">
+        <form className="row g-2 p-4 bg-white shadow rounded-4" onSubmit={handleSubmit}>
             <h5 className="fw-semibold">Información personal</h5>
 
             <div className="col-md-6">
@@ -45,12 +87,24 @@ export const PaymentInfoForm = () => {
 
             <div className="col-md-4">
                 <label className="form-label">Provincia</label>
-                <input type="text" className="form-control"/>
+                <select className="form-select" value={provincia} onChange={handleProvinciaChange} required>
+                    <option value="">Seleccione una provincia</option>
+                    {locations.map((loc) => (
+                        <option key={loc.provincia} value={loc.provincia}>
+                            {loc.provincia}
+                        </option>
+                    ))}
+                </select>
             </div>
 
             <div className="col-md-4">
                 <label className="form-label">Ciudad</label>
-                <input type="text" className="form-control"/>
+                <select className="form-select" value={ciudad} onChange={(e) => setCiudad(e.target.value)} required>
+                    <option value="">Seleccione una ciudad</option>
+                    {selectedProvincia?.ciudades.map((city) => (
+                        <option key={city} value={city}>{city}</option>
+                    ))}
+                </select>
             </div>
 
             <div className="col-12">
@@ -77,8 +131,9 @@ export const PaymentInfoForm = () => {
                         checked={paymentMethod === "transferencia"}
                         onChange={handlePaymentChange}
                     />
-                    <label className="form-check-label" htmlFor="transferencia">Transferencia bancaria o
-                        depósito</label>
+                    <label className="form-check-label" htmlFor="transferencia">
+                        Transferencia bancaria o depósito
+                    </label>
                 </div>
 
                 <div className="form-check form-check-inline my-2">
@@ -91,7 +146,9 @@ export const PaymentInfoForm = () => {
                         checked={paymentMethod === "tarjeta"}
                         onChange={handlePaymentChange}
                     />
-                    <label className="form-check-label" htmlFor="tarjeta">Tarjeta de crédito Visa o Mastercard</label>
+                    <label className="form-check-label" htmlFor="tarjeta">
+                        Tarjeta de crédito Visa o Mastercard
+                    </label>
                 </div>
             </div>
 
