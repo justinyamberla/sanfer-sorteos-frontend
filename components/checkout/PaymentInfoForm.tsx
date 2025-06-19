@@ -31,6 +31,9 @@ export const PaymentInfoForm = () => {
 
         const formData: FormData = {
             numeroPedido: 12345,
+            fecha: "2023-10-01",
+            producto: "Números Mitsubishi L200 4x4 + KTM Duke 250 + Honda Navi | Actividad #30",
+            cantidad: 20,
             nombres: "Justin Alexis",
             apellidos: "Yamberla Marcillo",
             email: "justin@correo.com",

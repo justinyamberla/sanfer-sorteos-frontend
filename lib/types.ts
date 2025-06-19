@@ -1,5 +1,8 @@
 export type FormData = {
     numeroPedido: number;
+    fecha: string;
+    producto: string;
+    cantidad: number;
     nombres: string;
     apellidos: string;
     email: string;
