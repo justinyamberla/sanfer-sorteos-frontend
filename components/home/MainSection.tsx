@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import exampleImg from '@/public/images/mainImage.jpeg';
+import {ProgressBar} from "react-bootstrap";
 
 export const MainSection = ({props}) => {
     return (
@@ -19,17 +20,30 @@ export const MainSection = ({props}) => {
                         </p>
 
                         {/* Barra de progreso */}
-                        <div className="progress mb-2 shadow" style={{ height: '25px' }}>
-                            <div className="progress-bar progress-bar-striped bg-primary" role="progressbar" style={{ width: '65%' }}>
-                                65% vendidos
-                            </div>
-                        </div>
+                        <ProgressBar
+                            animated
+                            now={45}
+                            style={{height: '25px'}}
+                            label={`${45}% vendidos`}
+                            className="shadow mb-2"
+                        />
                         <small className="fw-semibold fs-6">Quedan 35 boletos disponibles</small>
 
                         {/* Botones */}
                         <div className="d-flex mt-5 gap-3">
-                            <a type="button" href="#instructionsSection" className="btn btn-dark px-4 shadow">Comprar boletos</a>
-                            <button className="btn btn-outline-primary px-4">Ver sorteo</button>
+                            <a
+                                type="button"
+                                href="#instructionsSection"
+                                className="btn btn-dark px-4 shadow"
+                            >
+                                Comprar boletos
+                            </a>
+                            <button
+                                className="btn btn-outline-primary px-4"
+                                onClick={() => alert("Aún no se ha iniciado el sorteo")}
+                            >
+                                Ver sorteo
+                            </button>
                         </div>
                     </div>
 

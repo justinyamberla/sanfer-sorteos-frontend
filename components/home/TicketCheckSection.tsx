@@ -15,10 +15,14 @@ export const TicketCheckSection = () => {
                                 className="form-control"
                                 placeholder="Correo electrónico"
                                 aria-label="Correo electrónico"
+                                required
                             />
                         </div>
                         <div className="col-12 col-md-auto">
-                            <button className="btn btn-primary text-white w-100" type="button">
+                            <button
+                                className="btn btn-primary text-white w-100"
+                                type="submit"
+                            >
                                 Consultar
                             </button>
                         </div>

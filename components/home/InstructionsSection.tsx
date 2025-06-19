@@ -69,7 +69,7 @@ export const InstructionsSection = () => {
 
             <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" scrollable>
                 <Modal.Header closeButton>
-                    <Modal.Title>Tutorial de pago</Modal.Title>
+                    <Modal.Title className="fw-semibold fs-5">Tutorial de pago</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <h5 className="text-center">Pago por transferencia</h5>
