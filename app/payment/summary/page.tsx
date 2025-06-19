@@ -1,9 +1,9 @@
 "use client";
 
-import { useCheckout } from "@/context/CheckoutContext";
+import { usePayment } from "@/context/PaymentContext";
 
 export default function SummaryPage() {
-    const { data } = useCheckout();
+    const { data } = usePayment();
 
     if (!data) return <p>No hay datos del pedido.</p>;
 

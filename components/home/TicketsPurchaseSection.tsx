@@ -16,7 +16,7 @@ export const TicketsPurchaseSection = () => {
             return;
         }
 
-        router.push(`/checkout?quantity=${customQuantity}`);
+        router.push(`/payment/checkout?quantity=${customQuantity}`);
     };
 
     return (
@@ -35,7 +35,7 @@ export const TicketsPurchaseSection = () => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">$10 USD</h3>
-                                <Link className="btn btn-dark" href={"/checkout?quantity=10"}>Comprar</Link>
+                                <Link className="btn btn-dark" href={"/payment/checkout?quantity=10"}>Comprar</Link>
                             </div>
                         </div>
                     </div>
@@ -48,7 +48,7 @@ export const TicketsPurchaseSection = () => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">$20 USD</h3>
-                                <Link className="btn btn-dark" href={"/checkout?quantity=20"}>Comprar</Link>
+                                <Link className="btn btn-dark" href={"/payment/checkout?quantity=20"}>Comprar</Link>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@ export const TicketsPurchaseSection = () => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">$30 USD</h3>
-                                <Link className="btn btn-dark" href={"/checkout?quantity=30"}>Comprar</Link>
+                                <Link className="btn btn-dark" href={"/payment/checkout?quantity=30"}>Comprar</Link>
                             </div>
                         </div>
                     </div>
@@ -84,6 +84,7 @@ export const TicketsPurchaseSection = () => {
                                 min="1"
                                 placeholder="Ej. 45"
                                 onChange={(e) => setCustomQuantity(Number(e.target.value))}
+                                required
                             />
                         </div>
 

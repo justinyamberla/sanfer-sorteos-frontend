@@ -2,14 +2,14 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useCheckout } from "@/context/CheckoutContext";
+import { usePayment } from "@/context/PaymentContext";
 import { locations } from "@/lib/locations";
 import type { FormData } from "@/lib/types";
 
 export const PaymentInfoForm = () => {
 
     const router = useRouter();
-    const { setData } = useCheckout();
+    const { setData } = usePayment();
 
     const [provincia, setProvincia] = useState("");
     const [ciudad, setCiudad] = useState("");
@@ -29,7 +29,8 @@ export const PaymentInfoForm = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const formData = {
+        const formData: FormData = {
+            numeroPedido: 12345,
             nombres: "Justin Alexis",
             apellidos: "Yamberla Marcillo",
             email: "justin@correo.com",
@@ -38,13 +39,13 @@ export const PaymentInfoForm = () => {
             provincia,
             ciudad,
             recibirNotificaciones: true,
-            metodoPago: paymentMethod as string,
+            metodoPago: paymentMethod as "transferencia" | "tarjeta",
         };
 
-        setData(formData as FormData);
+        setData(formData);
 
         if (paymentMethod === "transferencia") {
-            router.push("/payment/summary");
+            router.replace("/payment/summary");
         } else {
             // ejemplo: Payphone
             alert("Redirigiendo a Payphone...");

@@ -1,9 +1,9 @@
-import { CheckoutProvider } from "@/context/CheckoutContext";
+import { PaymentProvider } from "@/context/PaymentContext";
 
 export default function CheckoutLayout({ children }: { children: React.ReactNode }) {
     return (
-        <CheckoutProvider>
+        <PaymentProvider>
             {children}
-        </CheckoutProvider>
+        </PaymentProvider>
     );
 }

@@ -13,14 +13,12 @@ export const CheckoutPage = () => {
         <div className="container py-5">
             <h2 className="fw-bold mb-4 text-center">CHECKOUT</h2>
             <div className="row gy-4 flex-column-reverse flex-lg-row">
-                {/* Columna izquierda: Formulario + métodos de pago */}
                 <div className="col-lg-8">
                     <div className="mb-4">
                         <PaymentInfoForm />
                     </div>
                 </div>
 
-                {/* Columna derecha: Resumen del pedido */}
                 <div className="col-lg-4">
                     <OrderCard quantity={quantity} />
                 </div>
