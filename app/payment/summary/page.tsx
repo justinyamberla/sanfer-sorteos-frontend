@@ -15,7 +15,7 @@ export default function SummaryPage() {
                 <p className="text-center mb-3">Tu compra ha sido recibida</p>
 
                 {/* CARD PRINCIPAL */}
-                <div className="card mb-4 bg-white shadow border-primary">
+                <div className="mb-5 py-3 bg-white shadow border-primary rounded-4">
                     <div className="card-body text-center">
                         <div className="mb-3 border-bottom pb-2">
                             <small className="fw-bold">Número de pedido:</small>
@@ -56,7 +56,7 @@ export default function SummaryPage() {
 
                 {/* DATOS DE FACTURACIÓN */}
                 <h5 className="fw-semibold mb-3">Datos de Facturación</h5>
-                <div className="card bg-white mb-4 shadow border-0">
+                <div className="bg-white mb-4 shadow border-0 rounded-4 p-4">
                     <div className="card-body">
 
                         <div className="mb-2">
@@ -93,7 +93,7 @@ export default function SummaryPage() {
 
                 {/* INSTRUCCIONES DE PAGO */}
                 <h5 className="fw-semibold mb-3">Instrucciones de Pago</h5>
-                <div className="card bg-white mb-4 shadow border-0">
+                <div className="bg-white mb-4 shadow border-0 rounded-4 p-4">
                     <div className="card-body">
                         <ol className="ps-3 small">
                             <li>Anota o haz una captura del número de pedido (esquina superior izquierda de esta pantalla).</li>
@@ -124,7 +124,7 @@ export default function SummaryPage() {
 
                 {/* ACERCA DE TUS NÚMEROS */}
                 <h5 className="fw-semibold mb-3">Acerca de tus números</h5>
-                <div className="card bg-white mb-4 shadow border-0">
+                <div className="bg-white mb-4 shadow border-0 rounded-4 p-4">
                     <div className="card-body">
                         <p className="small mb-0">
                             Tus números serán generados una vez que verifiquemos el pago. Este proceso es manual y puede tardar. Por favor, sigue las instrucciones de esta página.

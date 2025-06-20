@@ -16,7 +16,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }: CountdownRenderP
 
 export const FinishedActivitySection = () => {
 
-    const targetDate = new Date("2025-06-18T20:00:00");
+    const targetDate = new Date("2025-06-22T20:00:00");
 
     return (
         <section className="py-5 text-center">
@@ -34,7 +34,7 @@ export const FinishedActivitySection = () => {
                 </p>
 
                 <p className="fw-semibold mb-4">
-                    <strong>Fecha del sorteo:</strong> Miércoles 18 de Junio | 8:00 PM
+                    <strong>Fecha del sorteo:</strong> Domingo 22 de Junio | 8:00 PM
                 </p>
 
                 <div className="d-inline-block px-4 py-3 bg-white rounded shadow">

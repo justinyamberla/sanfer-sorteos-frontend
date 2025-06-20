@@ -7,7 +7,7 @@ import actividad from "@/public/images/actividad.png";
 
 export const InstructionsSection = () => {
 
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     return (
         <section id="instructionsSection" className="py-5">
