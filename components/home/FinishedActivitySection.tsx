@@ -2,6 +2,7 @@
 
 import Countdown from 'react-countdown';
 import type { CountdownRenderProps } from "react-countdown";
+import { useEffect, useState } from "react";
 
 const renderer = ({ days, hours, minutes, seconds, completed }: CountdownRenderProps) => {
     if (completed) {
@@ -15,6 +16,12 @@ const renderer = ({ days, hours, minutes, seconds, completed }: CountdownRenderP
 };
 
 export const FinishedActivitySection = () => {
+
+    const [show, setShow] = useState(false);
+
+    useEffect(() => {
+        setShow(true); // Solo en el cliente
+    }, []);
 
     const targetDate = new Date("2025-06-22T20:00:00");
 
@@ -38,10 +45,12 @@ export const FinishedActivitySection = () => {
                 </p>
 
                 <div className="d-inline-block px-4 py-3 bg-white rounded shadow">
-                    <Countdown
-                        date={targetDate}
-                        renderer={renderer}
-                    />
+                    {show &&
+                        <Countdown
+                            date={targetDate}
+                            renderer={renderer}
+                        />
+                    }
                 </div>
             </div>
         </section>
