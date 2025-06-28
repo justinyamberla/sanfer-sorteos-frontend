@@ -13,3 +13,13 @@ export type FormData = {
     recibirNotificaciones: boolean;
     metodoPago: "transferencia" | "tarjeta";
 };
+
+export type Actividad = {
+    id: string;
+    titulo: string;
+    descripcion: string;
+    fechaInicio: string;
+    hora: string;
+    ubicacion: string;
+    participantes: string[];
+}

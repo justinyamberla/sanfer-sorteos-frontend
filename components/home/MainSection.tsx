@@ -2,34 +2,42 @@
 
 import Image from 'next/image';
 import exampleImg from '@/public/images/mainImage.jpeg';
-import {ProgressBar} from "react-bootstrap";
+import { ProgressBar, Carousel } from "react-bootstrap";
+import { use, useEffect } from "react";
+import { getActividades } from "@/services/ActividadService";
+import { BASE_URL_STORAGE } from "@/lib/baseUrl";
+import {auto} from "@popperjs/core";
 
-export const MainSection = ({props}) => {
+export const MainSection = ({ actividad }) => {
+
+    const { data } = use(actividad);
+    const vendidos = data.boletos_vendidos;
+    const generados = data.boletos_generados;
+    const porcentaje = vendidos > 0 ? (vendidos / generados) * 100 : 0;
+
     return (
-        <section id="mainSection" className="py-5">
+        <section id="mainSection" className="pt-4 pb-5">
             <div className="container">
                 <div className="row align-items-center">
-                    {/* Columna izquierda: texto */}
                     <div className="col-md-6 mb-4 mb-md-0">
-                        <span className="badge bg-dark mb-3 py-2">Actividad 1</span>
+                        <span className="badge bg-dark mb-3 py-2">Actividad {data.id}</span>
                         <h5 className="display-6 fw-bold">
-                            JUEGA MITSUBISHI L200 4X4 + KTM DUKE 250 + HONDA NAVI
+                            {data.titulo}
                         </h5>
                         <p className="lead fw-light mb-4">
-                            ¡Cantidades limitadas!
+                            {data.descripcion}
                         </p>
 
-                        {/* Barra de progreso */}
                         <ProgressBar
                             animated
-                            now={45}
-                            style={{height: '25px'}}
-                            label={`${45}% vendidos`}
+                            now={porcentaje < 5 ? 5 : porcentaje}
+                            style={{ height: '25px' }}
+                            label={`${Math.round(porcentaje)}% vendido`}
+                            visuallyHidden={porcentaje < 5}
                             className="shadow mb-2"
                         />
-                        <small className="fw-semibold fs-6">Quedan 35 boletos disponibles</small>
+                        <small className="fw-semibold fs-6">Quedan {data.boletos_disponibles} boletos disponibles</small>
 
-                        {/* Botones */}
                         <div className="d-flex mt-5 gap-3">
                             <a
                                 type="button"
@@ -47,45 +55,18 @@ export const MainSection = ({props}) => {
                         </div>
                     </div>
 
-                    {/* Columna derecha: imagen o carrusel */}
                     <div className="col-md-6 text-center">
-                        {/* Puedes cambiar por un carrusel de Bootstrap si prefieres */}
-                        <div id="carouselExample" className="carousel slide shadow">
-                            <div className="carousel-inner">
-                                <div className="carousel-item active">
-                                    <Image
-                                        src={exampleImg}
-                                        alt="Premios del sorteo"
-                                        className="img-fluid rounded shadow"
-                                        priority
+                        <Carousel interval={3000} pause="hover" indicators={false}>
+                            {data.imagenes.map((img, index) => (
+                                <Carousel.Item key={img.id}>
+                                    <img
+                                        className="d-block w-100 rounded shadow"
+                                        src={BASE_URL_STORAGE + img.url}
+                                        alt={img.nombre}
                                     />
-                                </div>
-                                <div className="carousel-item">
-                                    <Image
-                                        src={exampleImg}
-                                        alt="Premios del sorteo"
-                                        className="img-fluid rounded shadow"
-                                        priority
-                                    />
-                                </div>
-                                <div className="carousel-item">
-                                    <Image
-                                        src={exampleImg}
-                                        alt="Premios del sorteo"
-                                        className="img-fluid rounded shadow"
-                                        priority
-                                    />
-                                </div>
-                            </div>
-                            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Next</span>
-                            </button>
-                        </div>
+                                </Carousel.Item>
+                            ))}
+                        </Carousel>
                     </div>
                 </div>
             </div>
