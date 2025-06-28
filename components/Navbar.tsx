@@ -1,10 +1,15 @@
 'use client';
 
+import {usePathname} from "next/navigation";
+import Link from "next/link";
+
 export const Navbar = () => {
+
+    const pathname = usePathname();
+
     return (
         <nav className="navbar navbar-expand-lg shadow sticky-top bg-body-tertiary">
             <div className="container">
-                {/* Logo a la izquierda */}
                 <a className="navbar-brand fw-bold d-flex justify-content-center align-items-center" href="/">
                     <img src="/images/logo.png" alt="Logo" width="50" height="50" className="d-inline-block align-text-top me-2" />
                     MiSorteo
@@ -24,22 +29,26 @@ export const Navbar = () => {
                 </button>
 
                 {/* Enlaces centrados */}
-                {/*<div className="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <div className="collapse navbar-collapse ms-4" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item">
-                            <a className="nav-link active fw-semibold" aria-current="page" href="#">Inicio</a>
+                            <Link
+                                className={`nav-link ${pathname === '/' && 'active fw-semibold'}`}
+                                href="/"
+                            >
+                                Inicio
+                            </Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">Sorteos</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Consultar</a>
-                        </li>
-                        <li className="nav-item">
-                            <a className="nav-link" href="#">Contacto</a>
+                            <Link
+                                className={`nav-link ${pathname === '/terms-and-conditions' && 'active fw-semibold'}`}
+                                href="/terms-and-conditions"
+                            >
+                                Términos y Condiciones
+                            </Link>
                         </li>
                     </ul>
-                </div>*/}
+                </div>
             </div>
         </nav>
     );
