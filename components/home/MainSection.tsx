@@ -4,9 +4,7 @@ import Image from 'next/image';
 import exampleImg from '@/public/images/mainImage.jpeg';
 import { ProgressBar, Carousel } from "react-bootstrap";
 import { use, useEffect } from "react";
-import { getActividades } from "@/services/ActividadService";
 import { BASE_URL_STORAGE } from "@/lib/baseUrl";
-import {auto} from "@popperjs/core";
 
 export const MainSection = ({ actividad }) => {
 
