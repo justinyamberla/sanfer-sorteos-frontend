@@ -5,7 +5,7 @@ import { Collapse, Button, ListGroup } from 'react-bootstrap';
 import { useRouter, usePathname } from 'next/navigation';
 
 export const LateralNavbar = () => {
-    
+
     const [open, setOpen] = useState(false);
     const router = useRouter();
     const pathname = usePathname();
@@ -15,7 +15,7 @@ export const LateralNavbar = () => {
         { label: 'Actividad', path: '/admin/actividad' },
         { label: 'Pedidos', path: '/admin/pedidos' },
         { label: 'Contenido del sitio', path: '/admin/contenido' },
-        { label: 'Salir', path: '/logout' }
+        { label: 'Salir', path: '/' }
     ];
 
     return (
@@ -48,7 +48,7 @@ export const LateralNavbar = () => {
                                     }}
                                     active={pathname === item.path}
                                     variant={pathname === item.path ? '' : 'light'}
-                                    className="fw-semibold"
+                                    className="fw-semibold small"
                                 >
                                     {item.label}
                                 </ListGroup.Item>
@@ -68,7 +68,7 @@ export const LateralNavbar = () => {
                             onClick={() => router.push(item.path)}
                             active={pathname === item.path}
                             variant={pathname === item.path ? '' : 'light'}
-                            className="fw-semibold"
+                            className="fw-semibold small"
                         >
                             {item.label}
                         </ListGroup.Item>
