@@ -1,6 +1,6 @@
 import { BASE_URL_API } from "@/lib/baseUrl";
 
-export async function getActividades() {
+export async function getActividadActual() {
     try {
         const res = await fetch(`${BASE_URL_API}/actividad/actual`, {cache: "no-store"});
         const data = await res.json();

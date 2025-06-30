@@ -1,14 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-import exampleImg from '@/public/images/mainImage.jpeg';
 import { ProgressBar, Carousel } from "react-bootstrap";
-import { use, useEffect } from "react";
+import { use } from "react";
 import { BASE_URL_STORAGE } from "@/lib/baseUrl";
 
 export const MainSection = ({ actividad }) => {
 
     const { data } = use(actividad);
+
     const vendidos = data.boletos_vendidos;
     const generados = data.boletos_generados;
     const porcentaje = vendidos > 0 ? (vendidos / generados) * 100 : 0;
