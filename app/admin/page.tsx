@@ -46,7 +46,7 @@ export const AdminHome = () => {
                       <Col md={12}>
                           <Form.Group controlId="titulo">
                               <Form.Label className="fw-semibold">Título</Form.Label>
-                              <Form.Control size="sm" type="text" defaultValue={data.titulo} />
+                              <Form.Control size="sm" type="text" maxLength={100} defaultValue={data.titulo} />
                           </Form.Group>
                       </Col>
                   </Row>
