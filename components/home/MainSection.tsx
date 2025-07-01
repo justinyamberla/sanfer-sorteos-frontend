@@ -1,14 +1,13 @@
 'use client';
 
-import Image from 'next/image';
-import exampleImg from '@/public/images/mainImage.jpeg';
 import { ProgressBar, Carousel } from "react-bootstrap";
-import { use, useEffect } from "react";
+import { use } from "react";
 import { BASE_URL_STORAGE } from "@/lib/baseUrl";
 
 export const MainSection = ({ actividad }) => {
 
     const { data } = use(actividad);
+
     const vendidos = data.boletos_vendidos;
     const generados = data.boletos_generados;
     const porcentaje = vendidos > 0 ? (vendidos / generados) * 100 : 0;
@@ -18,7 +17,7 @@ export const MainSection = ({ actividad }) => {
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-md-6 mb-4 mb-md-0">
-                        <span className="badge bg-dark mb-3 py-2">Actividad {data.id}</span>
+                        <span className="badge bg-dark mb-3 py-2">{data.nombre}</span>
                         <h5 className="display-6 fw-bold">
                             {data.titulo}
                         </h5>

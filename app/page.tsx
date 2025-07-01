@@ -6,13 +6,13 @@ import TicketCheckSection from "@/components/home/TicketCheckSection";
 import AdsSection from "@/components/home/AdsSection";
 import LastActivitiesSection from "@/components/home/LastActivitiesSection";
 import FinishedActivitySection from "@/components/home/FinishedActivitySection";
-import { getActividades } from "@/services/ActividadService";
+import { getActividadActual } from "@/services/ActividadService";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
 
 export default function Home() {
 
-    const data = getActividades();
+    const data = getActividadActual();
 
     return (
         <div className="min-vh-100 w-100 container">
