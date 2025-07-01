@@ -13,6 +13,7 @@ import FilePondPluginImageResize from 'filepond-plugin-image-resize';
 import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
 import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
+
 import {createActividad} from "@/services/ActividadService";
 import toast from "react-hot-toast";
 import Loading from "@/components/Loading";
