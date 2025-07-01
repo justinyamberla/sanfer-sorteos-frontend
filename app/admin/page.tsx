@@ -1,8 +1,8 @@
 'use client';
 
-import React, {useEffect, useState} from "react";
-import {Badge, Spinner, Button, Form, Row, Col} from "react-bootstrap";
-import {getActividadActual} from "@/services/ActividadService";
+import React, { useEffect, useState } from "react";
+import { Badge, Button, Form, Row, Col } from "react-bootstrap";
+import { getActividadActual } from "@/services/ActividadService";
 import Loading from "@/components/Loading";
 import CreateActivityModal from "@/components/admin/CreateActivityModal";
 
@@ -12,19 +12,19 @@ export const AdminHome = () => {
     const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState(false);
 
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const res = await getActividadActual();
-                console.log(res)
-                setData(res.data);
-            } catch (err) {
-                console.error("Error al cargar actividad:", err);
-            } finally {
-                setLoading(false);
-            }
+    async function fetchData() {
+        try {
+            const res = await getActividadActual();
+            console.log(res)
+            setData(res.data);
+        } catch (err) {
+            console.error("Error al cargar actividad:", err);
+        } finally {
+            setLoading(false);
         }
+    }
 
+    useEffect(() => {
         fetchData();
     }, []);
 
@@ -36,17 +36,16 @@ export const AdminHome = () => {
       <div>
           <h4 className="fw-bold my-3">Actividad actual</h4>
           <p className="small">Aquí puedes revisar y editar la información de la actividad en curso.</p>
-          <button
-              className="btn btn-sm btn-dark text-white"
-              onClick={() => setShowModal(true)}
-          >
-              Crear actividad
-          </button>
-
           <div className="bg-white my-4 p-4 rounded small">
               {!data || data.length === 0 ? (
-                  <div>
-                      <p className="text-center">Aún no se ha creado una actividad.</p>
+                  <div className="text-center">
+                      <p>Aún no se ha creado una actividad.</p>
+                      <button
+                          className="btn btn-sm btn-dark text-white"
+                          onClick={() => setShowModal(true)}
+                      >
+                          Crear actividad
+                      </button>
                   </div>
               ) : (
                   <div>
@@ -136,7 +135,11 @@ export const AdminHome = () => {
               )}
           </div>
 
-          <CreateActivityModal show={showModal} onClose={() => setShowModal(false)} />
+          <CreateActivityModal
+              show={showModal}
+              onClose={() => setShowModal(false)}
+              onSuccess={fetchData}
+          />
       </div>
     );
 }

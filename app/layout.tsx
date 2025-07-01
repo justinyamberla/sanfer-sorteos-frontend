@@ -5,6 +5,7 @@ import 'jquery';
 import 'popper.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+import { Toaster } from 'react-hot-toast';
 import BootstrapJsBundle from "@/components/BootstrapJsBundle";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -24,9 +25,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <html lang="en">
         <body className={`${inter.className}`}>
         <BootstrapJsBundle />
-        <Navbar />
-        {children}
-        <Footer />
+        <Toaster position="top-right" />
+            <Navbar />
+            {children}
+            <Footer />
         </body>
         </html>
     );
