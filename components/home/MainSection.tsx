@@ -8,9 +8,15 @@ export const MainSection = ({ actividad }) => {
 
     const { data } = use(actividad);
 
-    const vendidos = data.boletos_vendidos;
-    const generados = data.boletos_generados;
+    const vendidos = data?.boletos_vendidos || 0;
+    const generados = data?.boletos_generados || 0;
     const porcentaje = vendidos > 0 ? (vendidos / generados) * 100 : 0;
+
+    if (!data) {
+        return <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+            <h4 className="text-muted">Cargando actividad...</h4>
+        </div>
+    }
 
     return (
         <section id="mainSection" className="pt-4 pb-5">
