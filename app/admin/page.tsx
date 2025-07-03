@@ -16,7 +16,6 @@ export const AdminHome = () => {
     async function fetchData() {
         try {
             const res = await getActividadActual();
-            console.log(res)
             setData(res.data);
         } catch (err) {
             console.error("Error al cargar actividad:", err);
@@ -49,7 +48,7 @@ export const AdminHome = () => {
                       </button>
                   </div>
               ) : (
-                  <ActivityForm data={data} />
+                  <ActivityForm data={data} onSave={fetchData} />
               )}
           </div>
 
