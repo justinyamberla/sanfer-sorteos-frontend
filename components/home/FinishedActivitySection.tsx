@@ -28,10 +28,6 @@ export const FinishedActivitySection = () => {
     return (
         <section className="py-5 text-center">
             <div className="container">
-                <div className="mb-3">
-                    <i className="bi bi-emoji-frown display-4 text-danger"></i>
-                </div>
-
                 <h2 className="fw-bold mb-3">
                     ¡LO SENTIMOS, LOS NÚMEROS PARA ESTA ACTIVIDAD SE AGOTARON!
                 </h2>
@@ -39,6 +35,8 @@ export const FinishedActivitySection = () => {
                 <p className="lead mb-2">
                     Los premios se jugarán en un Live en nuestras cuentas oficiales cuando la cuenta regresiva llegue a cero.
                 </p>
+
+                <p className="display-4">🙁</p>
 
                 <p className="fw-semibold mb-4">
                     <strong>Fecha del sorteo:</strong> Domingo 22 de Junio | 8:00 PM

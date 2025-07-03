@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export const TicketsPurchaseSection = () => {
+export const TicketsPurchaseSection = ({ price }) => {
 
     const router = useRouter();
     const [customQuantity, setCustomQuantity] = useState<number | string>(1);
@@ -23,7 +23,7 @@ export const TicketsPurchaseSection = () => {
         <section id="ticketsPurchaseSection" className="py-5">
             <div className="container">
                 <h2 className="text-center fw-bold mb-2">ADQUIERE TUS BOLETOS</h2>
-                <p className="text-center mb-5">El valor de cada boleto es de <strong>$1 USD</strong>.</p>
+                <p className="text-center mb-5">El valor de cada boleto es de <strong>${price} USD</strong>.</p>
 
                 {/* Cards de boletos */}
                 <div className="row justify-content-center mb-3">
@@ -34,7 +34,7 @@ export const TicketsPurchaseSection = () => {
                                 x10 boletos
                             </div>
                             <div className="card-body bg-white">
-                                <h3 className="display-6 text-primary fw-bold mb-3">$10 USD</h3>
+                                <h3 className="display-6 text-primary fw-bold mb-3">${10 * price} USD</h3>
                                 <Link className="btn btn-dark" href={"/payment/checkout?quantity=10"}>Comprar</Link>
                             </div>
                         </div>
@@ -47,7 +47,7 @@ export const TicketsPurchaseSection = () => {
                                 x20 boletos
                             </div>
                             <div className="card-body bg-white">
-                                <h3 className="display-6 text-primary fw-bold mb-3">$20 USD</h3>
+                                <h3 className="display-6 text-primary fw-bold mb-3">${20 * price} USD</h3>
                                 <Link className="btn btn-dark" href={"/payment/checkout?quantity=20"}>Comprar</Link>
                             </div>
                         </div>
@@ -60,7 +60,7 @@ export const TicketsPurchaseSection = () => {
                                 x30 boletos
                             </div>
                             <div className="card-body bg-white">
-                                <h3 className="display-6 text-primary fw-bold mb-3">$30 USD</h3>
+                                <h3 className="display-6 text-primary fw-bold mb-3">${30 * price} USD</h3>
                                 <Link className="btn btn-dark" href={"/payment/checkout?quantity=30"}>Comprar</Link>
                             </div>
                         </div>
