@@ -15,6 +15,7 @@ export const MainSection = ({ actividad }) => {
     const { data } = use(actividad);
 
     const vendidos = data?.boletos_vendidos || 0;
+    const disponibles = data?.boletos_disponibles || 0;
     const generados = data?.boletos_generados || 0;
     const porcentaje = vendidos > 0 ? (vendidos / generados) * 100 : 0;
 
@@ -86,7 +87,7 @@ export const MainSection = ({ actividad }) => {
             </section>
 
             <InstructionsSection />
-            <TicketsPurchaseSection price={data.precio_boleto} />
+            <TicketsPurchaseSection ticketsDisponibles={disponibles} price={data.precio_boleto} />
             <AwardsSection tickets={data.lista_boletos_ganadores} />
             <TicketCheckSection />
         </>

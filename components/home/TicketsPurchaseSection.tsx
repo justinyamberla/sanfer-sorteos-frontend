@@ -1,22 +1,31 @@
 'use client';
 
-import Link from "next/link";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import {Button} from "react-bootstrap";
 
-export const TicketsPurchaseSection = ({ price }) => {
+export const TicketsPurchaseSection = ({ price, ticketsDisponibles}) => {
 
     const router = useRouter();
-    const [customQuantity, setCustomQuantity] = useState<number | string>(1);
+    const [customQuantity, setCustomQuantity] = useState<number | undefined>(1);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!customQuantity || customQuantity <= 0) {
+    const handleSubmit = (quantity = 1, fromForm = false) => {
+        const cantidad = fromForm ? customQuantity : quantity;
+
+        // Validar si no hay cantidad o es inválida
+        if (!cantidad || cantidad <= 0) {
             alert("Por favor, ingresa una cantidad válida de boletos.");
             return;
         }
 
-        router.push(`/payment/checkout?quantity=${customQuantity}`);
+        // Validar si excede los disponibles
+        if (cantidad > ticketsDisponibles) {
+            alert(`Actualmente sólo hay ${ticketsDisponibles} boletos disponibles. Ingresa una cantidad válida y continúa con tu compra.`);
+            return;
+        }
+
+        // Redireccionar si pasa las validaciones
+        router.push(`/payment/checkout?quantity=${cantidad}`);
     };
 
     return (
@@ -35,7 +44,7 @@ export const TicketsPurchaseSection = ({ price }) => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">${10 * price} USD</h3>
-                                <Link className="btn btn-dark" href={"/payment/checkout?quantity=10"}>Comprar</Link>
+                                <Button className="btn btn-dark" onClick={() => handleSubmit(10)}>Comprar</Button>
                             </div>
                         </div>
                     </div>
@@ -48,7 +57,7 @@ export const TicketsPurchaseSection = ({ price }) => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">${20 * price} USD</h3>
-                                <Link className="btn btn-dark" href={"/payment/checkout?quantity=20"}>Comprar</Link>
+                                <Button className="btn btn-dark" onClick={() => handleSubmit(20)}>Comprar</Button>
                             </div>
                         </div>
                     </div>
@@ -61,7 +70,7 @@ export const TicketsPurchaseSection = ({ price }) => {
                             </div>
                             <div className="card-body bg-white">
                                 <h3 className="display-6 text-primary fw-bold mb-3">${30 * price} USD</h3>
-                                <Link className="btn btn-dark" href={"/payment/checkout?quantity=30"}>Comprar</Link>
+                                <Button className="btn btn-dark" onClick={() => handleSubmit(30)}>Comprar</Button>
                             </div>
                         </div>
                     </div>
@@ -70,7 +79,7 @@ export const TicketsPurchaseSection = ({ price }) => {
                 <div className="bg-white p-4 rounded border shadow">
                     <h4 className="fw-bold mb-3">¿Más números?</h4>
 
-                    <form className="row align-items-center" onSubmit={handleSubmit}>
+                    <form className="row align-items-center">
                         <div className="col-12 col-md-auto mb-2 mb-md-0">
                             <label className="form-label mb-0">
                                 Agrega la cantidad de boletos que deseas comprar:
@@ -87,9 +96,16 @@ export const TicketsPurchaseSection = ({ price }) => {
                                 required
                             />
                         </div>
-
                         <div className="col-12 col-md-auto">
-                            <button type="submit" className="btn btn-success w-100 text-white">Comprar</button>
+                            <button
+                                className="btn btn-success w-100 text-white"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSubmit(customQuantity, true)
+                                }}
+                            >
+                                Comprar
+                            </button>
                         </div>
                     </form>
                 </div>
