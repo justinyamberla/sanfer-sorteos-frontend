@@ -4,7 +4,6 @@ export async function getActividadActual() {
     try {
         const res = await fetch(`${BASE_URL_API}/actividad/actual`, {cache: "no-store"});
         const data = await res.json();
-        console.log("Respuesta de getActividades:", data);
 
         return {
             success: data.success ?? res.ok,
@@ -64,3 +63,46 @@ export async function createActividad(formData) {
         };
     }
 }
+
+export async function updateActividad(id: number, formData: any) {
+    try {
+        const form = new FormData();
+
+        // Campos del formulario (puedes usar un loop para mayor escalabilidad)
+        const campos = ['titulo', 'descripcion', 'fecha_sorteo', 'url_live_sorteo'];
+        campos.forEach(campo => {
+            form.append(campo, formData[campo] || '');
+        });
+
+        // Método HTTP override
+        form.append('_method', 'PUT');
+
+        // Adjuntar solo archivos válidos (File o Blob)
+        if (Array.isArray(formData.imagenes)) {
+            formData.imagenes.forEach((file: File) => {
+                form.append('imagenes[]', file);
+            });
+        }
+
+        const res = await fetch(`${BASE_URL_API}/actividades/${id}`, {
+            method: 'POST',
+            body: form,
+        });
+
+        const data = await res.json();
+
+        return {
+            success: data.success ?? res.ok,
+            data: data.data ?? null,
+            message: data.message ?? 'Actividad actualizada correctamente.',
+        };
+    } catch (error: any) {
+        console.error('Error en updateActividad:', error);
+        return {
+            success: false,
+            data: null,
+            message: error.message || 'Error inesperado al actualizar actividad',
+        };
+    }
+}
+

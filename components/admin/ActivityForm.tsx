@@ -2,7 +2,6 @@
 
 import React, {useEffect, useState} from "react";
 import {Badge, Button, Col, Form, Row} from "react-bootstrap";
-import { BASE_URL_STORAGE } from "@/lib/baseUrl";
 
 import 'filepond/dist/filepond.min.css';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
@@ -16,6 +15,10 @@ import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 
 import {FilePondInitialFile} from "filepond";
+import {updateActividad} from "@/services/ActividadService";
+import toast from "react-hot-toast";
+import Loading from "@/components/Loading";
+import {filepondLoadHandler} from "@/utils/filepondHandler";
 
 registerPlugin(
     FilePondPluginImagePreview,
@@ -27,25 +30,73 @@ registerPlugin(
     FilePondPluginImageExifOrientation
 );
 
-export const ActivityForm = ({ data, onSave, onCancel }) => {
+export const ActivityForm = ({ data, onSave }) => {
 
+    const initialFormData = {
+        id: data.id || 0,
+        titulo: data.titulo || "",
+        descripcion: data.descripcion || "",
+        fecha_sorteo: data.fecha_sorteo || "",
+        url_live_sorteo: data.url_live_sorteo || "",
+    }
+
+    const [loading, setLoading] = useState(false);
     const [imagenes, setImagenes] = useState<FilePondInitialFile[]>([]);
+    const [formData, setFormData] = useState(initialFormData);
 
     useEffect(() => {
         if (data && data.imagenes) {
-            const files = data.imagenes.map((img) => ({
-                source: `${BASE_URL_STORAGE}${img.url}`,
+            const files = data.imagenes.map(img => ({
+                source: img.url,
                 options: {
                     type: 'local',
                     metadata: {
-                        id: img.id
+                        id: img.uuid,
+                        name: img.nombre,
+                        size: img.tamano,
+                        type: `image/${img.formato}`,
                     }
                 }
             }));
-            console.log(files)
+            console.log("Imagenes iniciales:", files);
             setImagenes(files);
         }
     }, [data]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { id, value } = e.target;
+        setFormData((prev) => ({ ...prev, [id]: value }));
+    };
+
+    const handleUpdateFiles = (fileItems) => {
+        const files = fileItems.map(item => item.file).filter(Boolean);
+        console.log('Files:', files)
+        setImagenes(files); // solo Files (no objects con opciones)
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        console.log('Archivos para enviar a backend:', imagenes); // directamente Files
+
+        const response = await updateActividad(data.id, {
+            ...formData,
+            imagenes, // array de File directamente
+        });
+
+        if (response.success) {
+            toast.success("Actividad actualizada exitosamente");
+        } else {
+            toast.error(response.message || "Error al actualizar actividad");
+        }
+
+        setLoading(false);
+    };
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <div>
@@ -53,12 +104,18 @@ export const ActivityForm = ({ data, onSave, onCancel }) => {
                 <Badge bg="dark">{data.nombre}</Badge>
                 <Badge bg={data.estado === "activo" ? "primary" : "warning"} className="text-capitalize">{data.estado}</Badge>
             </div>
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
                     <Col md={12}>
                         <Form.Group controlId="titulo">
                             <Form.Label className="fw-semibold">Título</Form.Label>
-                            <Form.Control size="sm" type="text" maxLength={100} defaultValue={data.titulo} />
+                            <Form.Control
+                                size="sm"
+                                type="text"
+                                maxLength={100}
+                                defaultValue={data.titulo}
+                                onChange={handleChange}
+                            />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -67,7 +124,13 @@ export const ActivityForm = ({ data, onSave, onCancel }) => {
                     <Col md={12}>
                         <Form.Group controlId="descripcion">
                             <Form.Label className="fw-semibold">Descripción</Form.Label>
-                            <Form.Control size="sm" as="textarea" maxLength={500} defaultValue={data.descripcion} />
+                            <Form.Control
+                                size="sm"
+                                as="textarea"
+                                maxLength={500}
+                                defaultValue={data.descripcion}
+                                onChange={handleChange}
+                            />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -88,7 +151,12 @@ export const ActivityForm = ({ data, onSave, onCancel }) => {
                     <Col md={4}>
                         <Form.Group controlId="fecha_sorteo">
                             <Form.Label className="fw-semibold">Fecha sorteo</Form.Label>
-                            <Form.Control size="sm" type="date" defaultValue={data.fecha_sorteo || ""} />
+                            <Form.Control
+                                size="sm"
+                                type="date"
+                                defaultValue={data.fecha_sorteo || ""}
+                                onChange={handleChange}
+                            />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -118,7 +186,12 @@ export const ActivityForm = ({ data, onSave, onCancel }) => {
                     <Col md={12}>
                         <Form.Group controlId="url_live_sorteo">
                             <Form.Label className="fw-semibold">URL del sorteo en vivo</Form.Label>
-                            <Form.Control size="sm" type="url" defaultValue={data.url_live_sorteo || ""} />
+                            <Form.Control
+                                size="sm"
+                                type="url"
+                                defaultValue={data.url_live_sorteo || ""}
+                                onChange={handleChange}
+                            />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -128,46 +201,17 @@ export const ActivityForm = ({ data, onSave, onCancel }) => {
                         <Form.Group controlId="imagenes" className="mb-4">
                             <Form.Label className="fw-semibold">Imágenes</Form.Label>
                             <FilePond
+                                required
                                 files={imagenes}
-                                onupdatefiles={setImagenes}
-                                maxFiles={10}
+                                onupdatefiles={handleUpdateFiles}
+                                server={{load: filepondLoadHandler}}
+                                instantUpload={false}
+                                allowRemove={true}
+                                maxFiles={8}
                                 name="imagenes"
                                 allowMultiple={true}
                                 acceptedFileTypes={['image/png', 'image/jpeg', 'image/jpg']}
-                                labelIdle='Arrastra tus imágenes o <span class="filepond--label-action">explora</span>'
-                                server={{
-                                    load: (source, load, error, progress, abort, headers) => {
-                                        const request = new XMLHttpRequest();
-                                        request.open('GET', source, true);
-                                        request.responseType = 'blob';
-
-                                        request.onload = () => {
-                                            if (request.status >= 200 && request.status < 300) {
-                                                const blob = request.response;
-                                                blob.type = request.getResponseHeader('Content-Type') || 'image/jpeg';
-                                                load(blob);
-                                            } else {
-                                                error('Error al cargar la imagen');
-                                            }
-                                        };
-
-                                        request.onerror = () => error('Error de red al cargar la imagen');
-                                        request.onprogress = (event) => {
-                                            if (event.lengthComputable) {
-                                                progress(true, event.loaded, event.total);
-                                            }
-                                        };
-
-                                        request.send();
-
-                                        return {
-                                            abort: () => {
-                                                request.abort();
-                                                abort();
-                                            },
-                                        };
-                                    }
-                                }}
+                                labelIdle='<span class="btn btn-sm btn-dark">Sube o arrastra una imagen</span>'
                                 className='file-uploader file-uploader-grid border-light bg-faded-light'
                             />
                         </Form.Group>
