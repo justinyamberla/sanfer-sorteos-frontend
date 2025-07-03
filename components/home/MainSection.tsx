@@ -8,9 +8,15 @@ export const MainSection = ({ actividad }) => {
 
     const { data } = use(actividad);
 
-    const vendidos = data.boletos_vendidos;
-    const generados = data.boletos_generados;
+    const vendidos = data?.boletos_vendidos || 0;
+    const generados = data?.boletos_generados || 0;
     const porcentaje = vendidos > 0 ? (vendidos / generados) * 100 : 0;
+
+    if (!data) {
+        return <div className="d-flex flex-column justify-content-center align-items-center vh-100">
+            <h4 className="text-muted">Cargando actividad...</h4>
+        </div>
+    }
 
     return (
         <section id="mainSection" className="pt-4 pb-5">
@@ -55,10 +61,10 @@ export const MainSection = ({ actividad }) => {
                     <div className="col-md-6 text-center">
                         <Carousel interval={3000} pause="hover" indicators={false}>
                             {data.imagenes.map((img, index) => (
-                                <Carousel.Item key={img.id}>
+                                <Carousel.Item key={index}>
                                     <img
                                         className="d-block w-100 rounded shadow"
-                                        src={BASE_URL_STORAGE + img.url}
+                                        src={img.url}
                                         alt={img.nombre}
                                     />
                                 </Carousel.Item>
