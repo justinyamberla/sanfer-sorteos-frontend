@@ -186,9 +186,9 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
                                     }}
                                     allowMultiple={true}
                                     acceptedFileTypes={['image/png', 'image/jpeg']}
-                                    maxFiles={10}
-                                    labelIdle='<span class="btn btn-sm btn-dark">Sube o arrastra una imagen</span>'
-                                    maxFileSize='2MB'
+                                    maxFiles={8}
+                                    labelIdle='Arrastra tus imágenes o <span class="filepond--label-action">explora</span>'
+                                    maxFileSize='4MB'
                                     className='file-uploader file-uploader-grid border-light bg-faded-light'
                                     required
                                 />

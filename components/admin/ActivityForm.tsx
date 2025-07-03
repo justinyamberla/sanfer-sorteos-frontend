@@ -34,6 +34,7 @@ export const ActivityForm = ({ data, onSave }) => {
 
     const initialFormData = {
         id: data.id || 0,
+        nombre: data.nombre || "",
         titulo: data.titulo || "",
         descripcion: data.descripcion || "",
         fecha_sorteo: data.fecha_sorteo || "",
@@ -70,15 +71,12 @@ export const ActivityForm = ({ data, onSave }) => {
 
     const handleUpdateFiles = (fileItems) => {
         const files = fileItems.map(item => item.file).filter(Boolean);
-        console.log('Files:', files)
         setImagenes(files); // solo Files (no objects con opciones)
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-
-        console.log('Archivos para enviar a backend:', imagenes); // directamente Files
 
         const response = await updateActividad(data.id, {
             ...formData,
@@ -105,6 +103,22 @@ export const ActivityForm = ({ data, onSave }) => {
                 <Badge bg={data.estado === "activo" ? "primary" : "warning"} className="text-capitalize">{data.estado}</Badge>
             </div>
             <Form onSubmit={handleSubmit}>
+                <Row className="mb-3">
+                    <Col md={12}>
+                        <Form.Group controlId="nombre">
+                            <Form.Label className="fw-semibold">Nombre</Form.Label>
+                            <Form.Control
+                                size="sm"
+                                type="text"
+                                maxLength={100}
+                                value={data.nombre}
+                                onChange={handleChange}
+                                required
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
                 <Row className="mb-3">
                     <Col md={12}>
                         <Form.Group controlId="titulo">
@@ -206,12 +220,12 @@ export const ActivityForm = ({ data, onSave }) => {
                                 onupdatefiles={handleUpdateFiles}
                                 server={{load: filepondLoadHandler}}
                                 instantUpload={false}
-                                allowRemove={true}
                                 maxFiles={8}
                                 name="imagenes"
                                 allowMultiple={true}
                                 acceptedFileTypes={['image/png', 'image/jpeg', 'image/jpg']}
-                                labelIdle='<span class="btn btn-sm btn-dark">Sube o arrastra una imagen</span>'
+                                maxFileSize='4MB'
+                                labelIdle='Arrastra tus imágenes o <span class="filepond--label-action">explora</span>'
                                 className='file-uploader file-uploader-grid border-light bg-faded-light'
                             />
                         </Form.Group>

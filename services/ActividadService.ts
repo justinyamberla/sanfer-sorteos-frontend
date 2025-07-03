@@ -69,7 +69,7 @@ export async function updateActividad(id: number, formData: any) {
         const form = new FormData();
 
         // Campos del formulario (puedes usar un loop para mayor escalabilidad)
-        const campos = ['titulo', 'descripcion', 'fecha_sorteo', 'url_live_sorteo'];
+        const campos = ['nombre', 'titulo', 'descripcion', 'fecha_sorteo', 'url_live_sorteo'];
         campos.forEach(campo => {
             form.append(campo, formData[campo] || '');
         });

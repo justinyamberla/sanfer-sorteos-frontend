@@ -55,10 +55,10 @@ export const MainSection = ({ actividad }) => {
                     <div className="col-md-6 text-center">
                         <Carousel interval={3000} pause="hover" indicators={false}>
                             {data.imagenes.map((img, index) => (
-                                <Carousel.Item key={img.id}>
+                                <Carousel.Item key={index}>
                                     <img
                                         className="d-block w-100 rounded shadow"
-                                        src={BASE_URL_STORAGE + img.url}
+                                        src={img.url}
                                         alt={img.nombre}
                                     />
                                 </Carousel.Item>
