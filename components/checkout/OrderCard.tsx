@@ -1,14 +1,13 @@
+"use client";
+
 import Link from "next/link";
+import {usePayment} from "@/context/PaymentContext";
 
-interface OrderCardProps {
-    quantity: string | null;
-}
+export const OrderCard = () => {
 
-const UNIT_PRICE = 1; // Precio por boleto
+    const { formData } = usePayment();
 
-export const OrderCard = ({ quantity }: OrderCardProps) => {
-    const qty = Number(quantity) || 0;
-    const total = qty * UNIT_PRICE;
+    if (!formData) return <div>Cargando información del sorteo...</div>;
 
     return (
         <div className="row g-2 bg-white p-4 shadow rounded-4">
@@ -17,24 +16,24 @@ export const OrderCard = ({ quantity }: OrderCardProps) => {
 
                 <div className="d-flex justify-content-between mb-2">
                     <span className="fw-semibold me-2">Producto: </span>
-                    <span className="text-end">Números Mitsubishi L200 4x4 + KTM Duke 250 + Honda Navi | Actividad #30</span>
+                    <span className="text-end">{formData?.producto}</span>
                 </div>
 
                 <div className="d-flex justify-content-between mb-2">
                     <span className="fw-semibold">Cantidad:</span>
-                    <span>{qty} boleto(s)</span>
+                    <span>{formData?.cantidad} boleto(s)</span>
                 </div>
 
                 <div className="d-flex justify-content-between mb-2">
                     <span className="fw-semibold">Precio unitario:</span>
-                    <span>${UNIT_PRICE.toFixed(2)}</span>
+                    <span>${formData?.precio.toFixed(2)}</span>
                 </div>
 
                 <hr />
 
                 <div className="d-flex justify-content-between">
                     <strong>Total:</strong>
-                    <strong className="text-primary">${total.toFixed(2)}</strong>
+                    <strong className="text-primary">${formData?.total.toFixed(2)}</strong>
                 </div>
 
                 <div className="mt-4">

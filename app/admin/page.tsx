@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { Badge, Button, Form, Row, Col } from "react-bootstrap";
 import { getActividadActual } from "@/services/ActividadService";
 import Loading from "@/components/Loading";
 import CreateActivityModal from "@/components/admin/CreateActivityModal";

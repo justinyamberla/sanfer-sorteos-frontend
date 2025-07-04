@@ -1,6 +1,6 @@
 import { PaymentProvider } from "@/context/PaymentContext";
 
-export default function CheckoutLayout({ children }: { children: React.ReactNode }) {
+export default function PaymentLayout({ children }: { children: React.ReactNode }) {
     return (
         <PaymentProvider>
             {children}
