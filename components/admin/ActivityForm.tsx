@@ -15,7 +15,7 @@ import FilePondPluginImageTransform from 'filepond-plugin-image-transform';
 import FilePondPluginImageExifOrientation from 'filepond-plugin-image-exif-orientation';
 
 import {FilePondInitialFile} from "filepond";
-import {updateActividad} from "@/services/ActividadService";
+import {deleteActividad, updateActividad} from "@/services/ActividadService";
 import toast from "react-hot-toast";
 import Loading from "@/components/Loading";
 import {filepondLoadHandler} from "@/utils/filepondHandler";
@@ -85,12 +85,31 @@ export const ActivityForm = ({ data, onSave }) => {
 
         if (response.success) {
             toast.success("Actividad actualizada exitosamente");
+            onSave(); // Callback para actualizar el estado en el componente padre
         } else {
             toast.error(response.message || "Error al actualizar actividad");
         }
 
         setLoading(false);
     };
+
+    const handleDelete = async () => {
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta actividad? Esta acción no se puede deshacer.");
+
+        if (!confirmDelete) return;
+
+        setLoading(true);
+        const response = await deleteActividad(data.id);
+
+        if (response.success) {
+            toast.success("Actividad eliminada exitosamente");
+            onSave(); // Callback para actualizar el estado en el componente padre
+        } else {
+            toast.error(response.message || "Error al eliminar actividad");
+        }
+
+        setLoading(false);
+    }
 
     if (loading) {
         return <Loading />;
@@ -99,7 +118,7 @@ export const ActivityForm = ({ data, onSave }) => {
     return (
         <div>
             <div className="mb-4 d-flex gap-2 align-items-center">
-                <Badge bg="dark">{data.nombre}</Badge>
+                <Badge bg="dark">{formData.nombre}</Badge>
                 <Badge bg={data.estado === "activo" ? "primary" : "warning"} className="text-capitalize">{data.estado}</Badge>
             </div>
             <Form onSubmit={handleSubmit}>
@@ -111,7 +130,7 @@ export const ActivityForm = ({ data, onSave }) => {
                                 size="sm"
                                 type="text"
                                 maxLength={100}
-                                value={data.nombre}
+                                value={formData.nombre}
                                 onChange={handleChange}
                                 required
                             />
@@ -127,7 +146,7 @@ export const ActivityForm = ({ data, onSave }) => {
                                 size="sm"
                                 type="text"
                                 maxLength={100}
-                                defaultValue={data.titulo}
+                                defaultValue={formData.titulo}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -142,7 +161,7 @@ export const ActivityForm = ({ data, onSave }) => {
                                 size="sm"
                                 as="textarea"
                                 maxLength={500}
-                                defaultValue={data.descripcion}
+                                defaultValue={formData.descripcion}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -168,7 +187,7 @@ export const ActivityForm = ({ data, onSave }) => {
                             <Form.Control
                                 size="sm"
                                 type="date"
-                                defaultValue={data.fecha_sorteo || ""}
+                                defaultValue={formData.fecha_sorteo || ""}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -203,7 +222,7 @@ export const ActivityForm = ({ data, onSave }) => {
                             <Form.Control
                                 size="sm"
                                 type="url"
-                                defaultValue={data.url_live_sorteo || ""}
+                                defaultValue={formData.url_live_sorteo || ""}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -234,7 +253,14 @@ export const ActivityForm = ({ data, onSave }) => {
                 </Row>
 
                 <div className="d-flex justify-content-between mt-4">
-                    <Button size="sm" variant="danger" className="text-white">Eliminar actividad</Button>
+                    <Button
+                        size="sm"
+                        variant="danger"
+                        className="text-white"
+                        onClick={handleDelete}
+                    >
+                        Eliminar actividad
+                    </Button>
                     <div className="d-flex gap-2">
                         <Button size="sm" variant="dark">Iniciar sorteo</Button>
                         <Button size="sm" variant="primary" className="text-white" type="submit">Guardar</Button>

@@ -9,6 +9,7 @@ import FinishedActivitySection from "@/components/home/FinishedActivitySection";
 import { getActividadActual } from "@/services/ActividadService";
 import { Suspense } from "react";
 import Loading from "@/components/Loading";
+import NoActivitySection from "@/components/home/NoActivitySection";
 
 export default function Home() {
 
@@ -19,11 +20,6 @@ export default function Home() {
             <Suspense fallback={<Loading />}>
                 <MainSection actividad={data} />
             </Suspense>
-            <FinishedActivitySection />
-            <InstructionsSection />
-            <TicketsPurchaseSection />
-            <AwardsSection />
-            <TicketCheckSection />
             <AdsSection />
             <LastActivitiesSection />
         </div>

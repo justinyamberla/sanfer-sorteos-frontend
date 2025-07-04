@@ -87,6 +87,7 @@ export async function updateActividad(id: number, formData: any) {
         const res = await fetch(`${BASE_URL_API}/actividades/${id}`, {
             method: 'POST',
             body: form,
+            cache: "no-store"
         });
 
         const data = await res.json();
@@ -102,6 +103,30 @@ export async function updateActividad(id: number, formData: any) {
             success: false,
             data: null,
             message: error.message || 'Error inesperado al actualizar actividad',
+        };
+    }
+}
+
+export const deleteActividad = async (id: number) => {
+    try {
+        const res = await fetch(`${BASE_URL_API}/actividades/${id}`, {
+            method: 'DELETE',
+            cache: "no-store"
+        });
+
+        const data = await res.json();
+
+        return {
+            success: data.success ?? res.ok,
+            data: data.data ?? null,
+            message: data.message ?? 'Actividad eliminada correctamente.',
+        };
+    } catch (error: any) {
+        console.error('Error en deleteActividad:', error);
+        return {
+            success: false,
+            data: null,
+            message: error.message || 'Error inesperado al eliminar actividad',
         };
     }
 }

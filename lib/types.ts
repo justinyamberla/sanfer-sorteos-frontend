@@ -3,6 +3,8 @@ export type FormData = {
     fecha: string;
     producto: string;
     cantidad: number;
+    precio: number;
+    total: number;
     nombres: string;
     apellidos: string;
     email: string;
@@ -14,12 +16,10 @@ export type FormData = {
     metodoPago: "transferencia" | "tarjeta";
 };
 
-export type Actividad = {
+export type ActividadData = {
     id: string;
+    nombre: string;
     titulo: string;
-    descripcion: string;
-    fechaInicio: string;
-    hora: string;
-    ubicacion: string;
-    participantes: string[];
+    precio_boleto: number;
+    boletos_disponibles: number;
 }

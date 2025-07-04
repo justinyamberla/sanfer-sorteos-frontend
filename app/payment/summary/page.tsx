@@ -4,9 +4,9 @@ import { usePayment } from "@/context/PaymentContext";
 import React from "react";
 
 export default function SummaryPage() {
-    const { data } = usePayment();
+    const { formData } = usePayment();
 
-    if (!data) return <p className="text-danger text-center mt-5">No hay datos del pedido.</p>;
+    if (!formData) return <p className="text-danger text-center mt-5">No hay datos del pedido.</p>;
 
     return (
         <div className="container d-flex justify-content-center my-5">
@@ -19,37 +19,37 @@ export default function SummaryPage() {
                     <div className="card-body text-center">
                         <div className="mb-3 border-bottom pb-2">
                             <small className="fw-bold">Número de pedido:</small>
-                            <p className="text-danger fs-5 fw-bold mb-0">{data.numeroPedido}</p>
+                            <p className="text-danger fs-5 fw-bold mb-0">{formData.numeroPedido}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Fecha:</small>
-                            <p className="mb-0">{data.fecha}</p>
+                            <p className="mb-0">{formData.fecha}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Cliente:</small>
-                            <p className="mb-0">{data.nombres} {data.apellidos}</p>
+                            <p className="mb-0">{formData.nombres} {formData.apellidos}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Producto:</small>
-                            <p className="mb-0">Sorteo de ejemplo</p>
+                            <p className="mb-0">{formData.producto}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Cantidad:</small>
-                            <p className="mb-0">1</p>
+                            <p className="mb-0">{formData.cantidad}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Método de pago:</small>
-                            <p className="mb-0">{data.metodoPago}</p>
+                            <p className="mb-0 text-capitalize">{formData.metodoPago}</p>
                         </div>
 
                         <div>
                             <small className="fw-bold">Total:</small>
-                            <p className="mb-0 text-primary fs-5 fw-bold">$5.00</p>
+                            <p className="mb-0 text-primary fs-5 fw-bold">${formData.total}</p>
                         </div>
                     </div>
                 </div>
@@ -61,32 +61,32 @@ export default function SummaryPage() {
 
                         <div className="mb-2">
                             <small className="fw-bold">Nombre completo:</small>
-                            <p className="mb-0">{data.nombres} {data.apellidos}</p>
+                            <p className="mb-0">{formData.nombres} {formData.apellidos}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Dirección:</small>
-                            <p className="mb-0">{data.direccion}</p>
+                            <p className="mb-0">{formData.direccion}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Ciudad:</small>
-                            <p className="mb-0">{data.ciudad}</p>
+                            <p className="mb-0">{formData.ciudad}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Provincia:</small>
-                            <p className="mb-0">{data.provincia}</p>
+                            <p className="mb-0">{formData.provincia}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Teléfono:</small>
-                            <p className="mb-0">{data.telefono}</p>
+                            <p className="mb-0">{formData.telefono}</p>
                         </div>
 
                         <div>
                             <small className="fw-bold">Correo electrónico:</small>
-                            <p className="mb-0">{data.email}</p>
+                            <p className="mb-0">{formData.email}</p>
                         </div>
                     </div>
                 </div>

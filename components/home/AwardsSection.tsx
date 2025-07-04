@@ -1,7 +1,6 @@
 'use client';
 
-export const AwardsSection = () => {
-    const ticketNumbers = [1011, 2012, 3073, 1404, 5445, 6406, 7047, 8048, 3909, 1001]; // ejemplo
+export const AwardsSection = ({ tickets }) => {
 
     return (
         <section id="awardsSection" className="py-5 text-center">
@@ -12,7 +11,7 @@ export const AwardsSection = () => {
                 </p>
 
                 <div className="row row-cols-2 row-cols-sm-3 row-cols-md-5 g-4">
-                    {ticketNumbers.map((number, index) => (
+                    {tickets.map((number, index) => (
                         <div className="col" key={index}>
                             <div className="card bg-white shadow border-dark text-center p-3 h-100">
                                 <div className="card-body d-flex align-items-center justify-content-center">

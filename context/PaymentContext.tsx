@@ -1,11 +1,13 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import type { FormData } from "@/lib/types";
+import type { FormData, ActividadData } from "@/lib/types";
 
 type PaymentContextType = {
-    data: FormData | null;
-    setData: React.Dispatch<React.SetStateAction<FormData | null>>;
+    formData: FormData | null;
+    setFormData: React.Dispatch<React.SetStateAction<FormData | null>>;
+    actividadData: ActividadData | null;
+    setActividadData: React.Dispatch<React.SetStateAction<ActividadData | null>>;
 };
 
 const PaymentContext = createContext<PaymentContextType | undefined>(undefined);
@@ -17,10 +19,11 @@ export const usePayment = () => {
 };
 
 export const PaymentProvider = ({ children }: { children: ReactNode }) => {
-    const [data, setData] = useState<FormData | null>(null);
+    const [formData, setFormData] = useState<FormData | null>(null);
+    const [actividadData, setActividadData] = useState<ActividadData | null>(null);
 
     return (
-        <PaymentContext.Provider value={{ data, setData }}>
+        <PaymentContext.Provider value={{ formData, setFormData, actividadData, setActividadData }}>
             {children}
         </PaymentContext.Provider>
     );
