@@ -29,22 +29,28 @@ export const CheckoutPage = () => {
                 boletos_disponibles: res.data?.boletos_disponibles || 0,
             });
             setFormData({
-                numeroPedido: 12345,
-                fecha: today,
-                producto: `Números ${res.data?.nombre} - ${res.data?.titulo}`,
-                cantidad: Number(quantity) || 0,
-                precio: Number(res.data?.precio_boleto) || 0,
-                total: (Number(res.data?.precio_boleto) || 0) * (quantity || 0),
-                nombres: "",
-                apellidos: "",
-                email: "",
-                telefono: "",
-                direccion: "",
-                provincia: "",
-                ciudad: "",
-                recibirNotificaciones: false,
-                metodoPago: "transferencia",
+                cliente: {
+                    nombres: "",
+                    apellidos: "",
+                    email: "",
+                    telefono: "",
+                    direccion: "",
+                    provincia: "",
+                    ciudad: "",
+                    recibirNotificaciones: false, // opcional
+                },
+                pedido: {
+                    numeroPedido: 0, // lo genera el backend
+                    actividad_id: res.data?.id || 0,
+                    cantidad: Number(quantity) || 0,
+                    precio: Number(res.data?.precio_boleto) || 0,
+                    total: Number(res.data?.precio_boleto) * (quantity),
+                    metodoPago: null,
+                    fecha: today,
+                    producto: `Números ${res.data?.nombre} - ${res.data?.titulo}`,
+                }
             });
+
         } catch (err) {
             console.error("Error al cargar actividad:", err);
         } finally {

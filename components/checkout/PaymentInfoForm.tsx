@@ -1,23 +1,32 @@
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation";
-import { usePayment } from "@/context/PaymentContext";
-import { locations } from "@/lib/locations";
+import React, {useState} from "react";
+import {useRouter} from "next/navigation";
+import {usePayment} from "@/context/PaymentContext";
+import {locations} from "@/lib/locations";
+import {createPedidoOffline} from "@/services/PedidoService";
+import toast from "react-hot-toast";
+import Loading from "@/components/Loading";
 
 export const PaymentInfoForm = () => {
+
     const router = useRouter();
-    const { formData, setFormData } = usePayment();
+    const {formData, setFormData} = usePayment();
 
-    const selectedProvincia = locations.find((loc) => loc.provincia === formData?.provincia);
+    const [loading, setLoading] = useState(false);
+    const selectedProvincia = locations.find((loc) => loc.provincia === formData?.cliente.provincia);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value, type, checked } = e.target;
+    const handleClienteChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const {name, value, type, checked} = e.target;
         setFormData((prev) => {
-            if (!prev) return prev;
+            if (!prev) return prev; // o un valor inicial por defecto si es null
+
             return {
                 ...prev,
-                [name]: type === 'checkbox' ? checked : value,
+                cliente: {
+                    ...prev.cliente,
+                    [name]: type === 'checkbox' ? checked : value,
+                },
             };
         });
     };
@@ -25,46 +34,93 @@ export const PaymentInfoForm = () => {
     const handleProvinciaChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const newProvincia = e.target.value;
         setFormData((prev) => {
-            if (!prev) return prev;
+            if (!prev) return prev; // o un valor inicial por defecto si es null
+
             return {
                 ...prev,
-                provincia: newProvincia,
-                ciudad: "", // reseteamos ciudad al cambiar provincia
-            };
+                cliente: {
+                    ...prev.cliente,
+                    provincia: newProvincia,
+                    ciudad: "", // Reseteamos ciudad
+                },
+            }
         });
     };
 
     const handleCiudadChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const ciudad = e.target.value;
         setFormData((prev) => {
-            if (!prev) return prev;
+            if (!prev) return prev; // o un valor inicial por defecto si es null
+
             return {
                 ...prev,
-                ciudad,
-            };
+                cliente: {
+                    ...prev.cliente,
+                    ciudad,
+                },
+            }
         });
     };
 
     const handlePaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const metodo = e.target.value as "transferencia" | "tarjeta";
+        const metodo = e.target.value as "offline" | "tarjeta";
         setFormData((prev) => {
-            if (!prev) return prev;
+            if (!prev) return prev; // o un valor inicial por defecto si es null
+
             return {
                 ...prev,
-                metodoPago: metodo,
-            };
+                pedido: {
+                    ...prev.pedido,
+                    metodoPago: metodo,
+                },
+            }
         });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        if (formData?.metodoPago === "transferencia") {
-            router.replace("/payment/summary");
+        if (!formData) {
+            return alert("Por favor, completa el formulario antes de continuar.");
+        }
+
+        if (formData.pedido.cantidad <= 0) {
+            return alert("Debes seleccionar al menos un boleto.");
+        }
+
+        if (formData?.pedido.metodoPago === "offline") {
+            setLoading(true);
+            const res = await createPedidoOffline(formData);
+
+            if (res.success) {
+                setFormData((prev) => {
+                    if (!prev) return prev;
+
+                    return {
+                        ...prev,
+                        pedido: {
+                            ...prev.pedido,
+                            numeroPedido: res.data.numeroPedido, // Asignamos el número de pedido recibido
+                        },
+                    }
+                });
+
+                toast.success(res.message);
+                router.replace("/payment/summary");
+            } else {
+                toast.error(res.message || "Error al procesar el pedido");
+            }
+
+            setLoading(false);
         } else {
             alert("Redirigiendo a Payphone...");
         }
     };
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <form className="row g-2 p-4 bg-white shadow rounded-4" onSubmit={handleSubmit}>
@@ -76,8 +132,8 @@ export const PaymentInfoForm = () => {
                     type="text"
                     name="nombres"
                     className="form-control"
-                    value={formData?.nombres}
-                    onChange={handleChange}
+                    value={formData?.cliente.nombres}
+                    onChange={handleClienteChange}
                     required
                 />
             </div>
@@ -88,8 +144,8 @@ export const PaymentInfoForm = () => {
                     type="text"
                     name="apellidos"
                     className="form-control"
-                    value={formData?.apellidos}
-                    onChange={handleChange}
+                    value={formData?.cliente.apellidos}
+                    onChange={handleClienteChange}
                     required
                 />
             </div>
@@ -100,8 +156,8 @@ export const PaymentInfoForm = () => {
                     type="email"
                     name="email"
                     className="form-control"
-                    value={formData?.email}
-                    onChange={handleChange}
+                    value={formData?.cliente.email}
+                    onChange={handleClienteChange}
                     required
                 />
             </div>
@@ -111,8 +167,8 @@ export const PaymentInfoForm = () => {
                 <input
                     type="tel"
                     name="telefono"
-                    value={formData?.telefono}
-                    onChange={handleChange}
+                    value={formData?.cliente.telefono}
+                    onChange={handleClienteChange}
                     className="form-control"
                     required
                 />
@@ -124,22 +180,22 @@ export const PaymentInfoForm = () => {
                     type="text"
                     className="form-control"
                     name="direccion"
-                    value={formData?.direccion}
-                    onChange={handleChange}
+                    value={formData?.cliente.direccion}
+                    onChange={handleClienteChange}
                     required
                 />
             </div>
 
             <div className="col-md-4">
                 <label className="form-label">País</label>
-                <input type="text" className="form-control" value="Ecuador" disabled />
+                <input type="text" className="form-control" value="Ecuador" disabled/>
             </div>
 
             <div className="col-md-4">
                 <label className="form-label">Provincia</label>
                 <select
                     className="form-select"
-                    value={formData?.provincia}
+                    value={formData?.cliente.provincia}
                     onChange={handleProvinciaChange}
                     required
                 >
@@ -156,7 +212,7 @@ export const PaymentInfoForm = () => {
                 <label className="form-label">Ciudad</label>
                 <select
                     className="form-select"
-                    value={formData?.ciudad}
+                    value={formData?.cliente.ciudad}
                     onChange={handleCiudadChange}
                     required
                 >
@@ -175,8 +231,8 @@ export const PaymentInfoForm = () => {
                         className="form-check-input"
                         type="checkbox"
                         name="recibirNotificaciones"
-                        checked={formData?.recibirNotificaciones}
-                        onChange={handleChange}
+                        checked={formData?.cliente.recibirNotificaciones}
+                        onChange={handleClienteChange}
                     />
                     <label className="form-check-label" htmlFor="recibirNotificaciones">
                         Deseo recibir notificaciones de próximos sorteos
@@ -184,7 +240,7 @@ export const PaymentInfoForm = () => {
                 </div>
             </div>
 
-            <hr className="mt-4" />
+            <hr className="mt-4"/>
 
             <h5 className="fw-semibold">Método de pago</h5>
 
@@ -194,12 +250,12 @@ export const PaymentInfoForm = () => {
                         className="form-check-input"
                         type="radio"
                         name="paymentMethod"
-                        id="transferencia"
-                        value="transferencia"
-                        checked={formData?.metodoPago === "transferencia"}
+                        id="offline"
+                        value="offline"
+                        checked={formData?.pedido.metodoPago === "offline"}
                         onChange={handlePaymentChange}
                     />
-                    <label className="form-check-label" htmlFor="transferencia">
+                    <label className="form-check-label" htmlFor="offline">
                         Transferencia bancaria o depósito
                     </label>
                 </div>
@@ -211,7 +267,7 @@ export const PaymentInfoForm = () => {
                         name="paymentMethod"
                         id="tarjeta"
                         value="tarjeta"
-                        checked={formData?.metodoPago === "tarjeta"}
+                        checked={formData?.pedido.metodoPago === "tarjeta"}
                         onChange={handlePaymentChange}
                     />
                     <label className="form-check-label" htmlFor="tarjeta">
@@ -220,13 +276,14 @@ export const PaymentInfoForm = () => {
                 </div>
             </div>
 
-            {formData?.metodoPago === "transferencia" && (
+            {formData?.pedido.metodoPago === "offline" && (
                 <div className="col-12">
                     <div className="alert alert-warning d-flex" role="alert">
                         <i className="bi bi-exclamation-triangle me-2"></i>
                         <div>
                             Por favor, NO PROCEDAS SI NO ESTÁS SEGURO de que quieres realizar la compra. Realiza tu pago
-                            directamente con transferencia o depósito a nuestra cuenta bancaria. Usa el número del pedido
+                            directamente con transferencia o depósito a nuestra cuenta bancaria. Usa el número del
+                            pedido
                             como referencia de pago. Tu pedido no se procesará hasta que se haya recibido el importe en
                             nuestra cuenta.
                         </div>
@@ -234,7 +291,7 @@ export const PaymentInfoForm = () => {
                 </div>
             )}
 
-            {formData?.metodoPago === "tarjeta" && (
+            {formData?.pedido.metodoPago === "tarjeta" && (
                 <div className="col-12">
                     <div className="alert alert-secondary">
                         Usa tus tarjetas de crédito y débito Visa o Mastercard.
@@ -244,7 +301,7 @@ export const PaymentInfoForm = () => {
 
             <div className="col-12">
                 <div className="form-check my-3">
-                    <input className="form-check-input" type="checkbox" id="aceptaTerminos" required />
+                    <input className="form-check-input" type="checkbox" id="aceptaTerminos" required/>
                     <label className="form-check-label" htmlFor="aceptaTerminos">
                         He leído y estoy de acuerdo con los Términos y Condiciones de la web{" "}
                         <span className="text-danger">*</span>

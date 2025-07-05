@@ -12,7 +12,6 @@ export const LateralNavbar = () => {
 
     const menuItems = [
         { label: 'Inicio', path: '/admin' },
-        { label: 'Actividad', path: '/admin/actividad' },
         { label: 'Pedidos', path: '/admin/pedidos' },
         { label: 'Contenido del sitio', path: '/admin/contenido' },
         { label: 'Salir', path: '/' }
