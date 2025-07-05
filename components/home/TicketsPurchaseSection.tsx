@@ -25,7 +25,7 @@ export const TicketsPurchaseSection = ({ price, ticketsDisponibles}) => {
         }
 
         // Redireccionar si pasa las validaciones
-        router.push(`/payment/checkout?quantity=${cantidad}`);
+        router.push(`/payment/checkout?quantity=${cantidad}`, {scroll: false});
     };
 
     return (
@@ -37,12 +37,12 @@ export const TicketsPurchaseSection = ({ price, ticketsDisponibles}) => {
                 {/* Cards de boletos */}
                 <div className="row justify-content-center mb-3">
                     {/* Card x10 */}
-                    <div className="col-md-4 mb-4">
+                    <div className="col-md-4 mb-4 rounded">
                         <div className="card h-100 text-center shadow">
                             <div className="card-header bg-dark text-white fw-bold">
                                 x10 boletos
                             </div>
-                            <div className="card-body bg-white">
+                            <div className="card-body bg-white rounded">
                                 <h3 className="display-6 text-primary fw-bold mb-3">${10 * price} USD</h3>
                                 <Button className="btn btn-dark" onClick={() => handleSubmit(10)}>Comprar</Button>
                             </div>
@@ -50,12 +50,12 @@ export const TicketsPurchaseSection = ({ price, ticketsDisponibles}) => {
                     </div>
 
                     {/* Card x20 */}
-                    <div className="col-md-4 mb-4">
+                    <div className="col-md-4 mb-4 rounded">
                         <div className="card h-100 text-center shadow">
                             <div className="card-header bg-primary text-white fw-bold">
                                 x20 boletos
                             </div>
-                            <div className="card-body bg-white">
+                            <div className="card-body bg-white rounded">
                                 <h3 className="display-6 text-primary fw-bold mb-3">${20 * price} USD</h3>
                                 <Button className="btn btn-dark" onClick={() => handleSubmit(20)}>Comprar</Button>
                             </div>
@@ -63,12 +63,12 @@ export const TicketsPurchaseSection = ({ price, ticketsDisponibles}) => {
                     </div>
 
                     {/* Card x10 */}
-                    <div className="col-md-4 mb-4">
+                    <div className="col-md-4 mb-4 rounded">
                         <div className="card h-100 text-center shadow">
                             <div className="card-header bg-dark text-white fw-bold">
                                 x30 boletos
                             </div>
-                            <div className="card-body bg-white">
+                            <div className="card-body bg-white rounded">
                                 <h3 className="display-6 text-primary fw-bold mb-3">${30 * price} USD</h3>
                                 <Button className="btn btn-dark" onClick={() => handleSubmit(30)}>Comprar</Button>
                             </div>

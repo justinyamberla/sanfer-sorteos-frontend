@@ -16,24 +16,24 @@ export const OrderCard = () => {
 
                 <div className="d-flex justify-content-between mb-2">
                     <span className="fw-semibold me-2">Producto: </span>
-                    <span className="text-end">{formData?.producto}</span>
+                    <span className="text-end">{formData?.pedido.producto}</span>
                 </div>
 
                 <div className="d-flex justify-content-between mb-2">
                     <span className="fw-semibold">Cantidad:</span>
-                    <span>{formData?.cantidad} boleto(s)</span>
+                    <span>{formData?.pedido.cantidad} boleto(s)</span>
                 </div>
 
                 <div className="d-flex justify-content-between mb-2">
                     <span className="fw-semibold">Precio unitario:</span>
-                    <span>${formData?.precio.toFixed(2)}</span>
+                    <span>${formData?.pedido.precio.toFixed(2)}</span>
                 </div>
 
                 <hr />
 
                 <div className="d-flex justify-content-between">
                     <strong>Total:</strong>
-                    <strong className="text-primary">${formData?.total.toFixed(2)}</strong>
+                    <strong className="text-primary">${formData?.pedido.total.toFixed(2)}</strong>
                 </div>
 
                 <div className="mt-4">
