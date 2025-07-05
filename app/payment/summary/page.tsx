@@ -5,6 +5,7 @@ import React from "react";
 
 export default function SummaryPage() {
     const { formData } = usePayment();
+    console.log(formData)
 
     if (!formData) return <p className="text-danger text-center mt-5">No hay datos del pedido.</p>;
 

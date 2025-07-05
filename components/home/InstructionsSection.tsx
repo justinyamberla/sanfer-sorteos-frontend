@@ -17,7 +17,7 @@ export const InstructionsSection = () => {
                     {/* Paso 1 */}
                     <div className="col-md-4 mb-4">
                         <div className="card h-100 shadow border-0">
-                            <div className="card-body bg-white">
+                            <div className="card-body bg-white rounded">
                                 <div className="mb-3">
                                     <span className="badge bg-primary fs-5 px-3 py-2">1</span>
                                 </div>
@@ -31,7 +31,7 @@ export const InstructionsSection = () => {
                     {/* Paso 2 */}
                     <div className="col-md-4 mb-4">
                         <div className="card h-100 shadow border-0">
-                            <div className="card-body bg-white">
+                            <div className="card-body bg-white rounded">
                                 <div className="mb-3">
                                     <span className="badge bg-primary fs-5 px-3 py-2">2</span>
                                 </div>
@@ -45,7 +45,7 @@ export const InstructionsSection = () => {
                     {/* Paso 3 */}
                     <div className="col-md-4 mb-4">
                         <div className="card h-100 shadow border-0">
-                            <div className="card-body bg-white">
+                            <div className="card-body bg-white rounded">
                                 <div className="mb-3">
                                     <span className="badge bg-primary fs-5 px-3 py-2">3</span>
                                 </div>
