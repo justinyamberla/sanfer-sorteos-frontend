@@ -101,7 +101,7 @@ export const PaymentInfoForm = () => {
                         ...prev,
                         pedido: {
                             ...prev.pedido,
-                            numeroPedido: res.data.numeroPedido, // Asignamos el número de pedido recibido
+                            numeroPedido: res.data.pedido.numero_pedido, // Asignamos el número de pedido recibido
                         },
                     }
                 });
