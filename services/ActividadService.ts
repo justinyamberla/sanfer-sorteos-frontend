@@ -29,9 +29,9 @@ export async function createActividad(formData) {
         form.append('titulo', formData.titulo);
         form.append('descripcion', formData.descripcion);
         form.append('fecha_inicio', formData.fecha_inicio);
-        form.append('boletos_generados', formData.boletos_generados.toString());
-        form.append('boletos_ganadores', formData.boletos_ganadores.toString());
-        form.append('precio_boleto', formData.precio_boleto.toString());
+        form.append('boletos_generados', Number(formData.boletos_generados.toString()));
+        form.append('boletos_ganadores', Number(formData.boletos_ganadores.toString()));
+        form.append('precio_boleto', Number(formData.precio_boleto.toString()));
 
         if (formData.url_live_sorteo) {
             form.append('url_live_sorteo', formData.url_live_sorteo);

@@ -21,36 +21,39 @@ export const CheckoutPage = () => {
     async function fetchData() {
         try {
             const res = await getActividadActual();
+
+            const actividad = res.data;
+
             setActividadData({
-                id: res.data?.id || 0,
-                nombre: res.data?.nombre || "",
-                titulo: res.data?.titulo || "",
-                precio_boleto: Number(res.data?.precio_boleto) || 0,
-                boletos_disponibles: res.data?.boletos_disponibles || 0,
-            });
-            setFormData({
-                cliente: {
-                    nombres: "",
-                    apellidos: "",
-                    email: "",
-                    telefono: "",
-                    direccion: "",
-                    provincia: "",
-                    ciudad: "",
-                    recibirNotificaciones: false, // opcional
-                },
-                pedido: {
-                    numeroPedido: 0, // lo genera el backend
-                    actividad_id: res.data?.id || 0,
-                    cantidad: Number(quantity) || 0,
-                    precio: Number(res.data?.precio_boleto) || 0,
-                    total: Number(res.data?.precio_boleto) * (quantity),
-                    metodoPago: null,
-                    fecha: today,
-                    producto: `Números ${res.data?.nombre} - ${res.data?.titulo}`,
-                }
+                id: actividad?.id || 0,
+                nombre: actividad?.nombre || "",
+                titulo: actividad?.titulo || "",
+                precio_boleto: Number(actividad?.precio_boleto) || 0,
+                boletos_disponibles: actividad?.boletos_disponibles || 0,
             });
 
+            setFormData({
+                numero_pedido: 0,
+                actividad_id: actividad?.id || 0,
+                precio: Number(actividad?.precio_boleto) || 0,
+                cantidad_boletos: Number(quantity) || 0,
+                total: Number(actividad?.precio_boleto) * quantity,
+                metodo_pago: null,
+                fecha_pedido: today,
+
+                // Datos del cliente (nivel raíz ahora)
+                nombres: "",
+                apellidos: "",
+                email: "",
+                telefono: "",
+                direccion: "",
+                provincia: "",
+                ciudad: "",
+                recibir_notificaciones: false,
+
+                // Extra para mostrar en UI
+                producto: `Números ${actividad?.nombre} - ${actividad?.titulo}`,
+            });
         } catch (err) {
             console.error("Error al cargar actividad:", err);
         } finally {

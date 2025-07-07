@@ -12,7 +12,13 @@ export default function PedidoCard({ pedido, onUpdate }) {
 
     const {
         numero_pedido,
-        cliente,
+        cliente_nombres,
+        cliente_apellidos,
+        cliente_email,
+        cliente_telefono,
+        cliente_direccion,
+        cliente_ciudad,
+        cliente_provincia,
         fecha_pedido,
         fecha_pago,
         fecha_expiracion,
@@ -90,7 +96,7 @@ export default function PedidoCard({ pedido, onUpdate }) {
                     <Row>
                         <Col md={5}>
                             <p className="mb-1"><strong>Número de pedido:</strong> <strong className="text-primary">{numero_pedido}</strong></p>
-                            <p className="mb-1"><strong>Cliente:</strong> {cliente.nombres} {cliente.apellidos}</p>
+                            <p className="mb-1"><strong>Cliente:</strong> {cliente_nombres} {cliente_apellidos}</p>
                             <p className="mb-1"><strong>Fecha de pedido:</strong> {formatDate(fecha_pedido)}</p>
                             <p className="mb-1"><strong>Fecha de expiración:</strong> {formatDate(fecha_expiracion)}</p>
                             <p className="mb-1"><strong>Fecha de pago:</strong> {formatDate(fecha_pago)}</p>
