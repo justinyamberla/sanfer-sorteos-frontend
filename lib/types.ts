@@ -1,26 +1,25 @@
 export type FormData = {
-    cliente: {
-        nombres: string;
-        apellidos: string;
-        email: string;
-        telefono: string;
-        direccion: string;
-        provincia: string;
-        ciudad: string;
-        recibirNotificaciones: boolean;
-    };
-    pedido: {
-        numeroPedido: number; // opcional, si lo asigna el backend, puedes usar `number | null`
-        fecha: string;
-        producto: string;
-        actividad_id: number; // nuevo, requerido para el POST
-        cantidad: number;
-        precio: number;
-        total: number;
-        metodoPago: "offline" | "tarjeta" | null;
-    };
-};
+    numero_pedido?: number; // opcional, lo asigna el backend
+    actividad_id: number;
+    precio: number;
+    cantidad_boletos: number;
+    total: number;
+    metodo_pago: "offline" | "tarjeta" | null;
+    fecha_pedido?: string; // opcional, si quieres mostrarla
 
+    // Datos del cliente integrados directamente
+    nombres: string;
+    apellidos: string;
+    email: string;
+    telefono: string;
+    direccion?: string;
+    provincia?: string;
+    ciudad?: string;
+    recibir_notificaciones: boolean;
+
+    // Extra opcional para mostrar en frontend
+    producto?: string;
+};
 
 export type ActividadData = {
     id: string;

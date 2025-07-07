@@ -52,7 +52,7 @@ export default function PedidosPage() {
                 <>
                     <div className="grid gap-4 small">
                         {pedidos.map((pedido) => (
-                            <PedidoCard key={pedido.id} pedido={pedido} />
+                            <PedidoCard key={pedido.id} pedido={pedido} onUpdate={fetchPedidos} />
                         ))}
                     </div>
                     <Pagination pagination={pagination} onPageChange={setPage} />

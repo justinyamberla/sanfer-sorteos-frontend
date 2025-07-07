@@ -18,6 +18,11 @@ export const TicketsPurchaseSection = ({ price, ticketsDisponibles}) => {
             return;
         }
 
+        if (ticketsDisponibles == 0 ) {
+            alert("No hay boletos disponibles para esta actividad en este momento. Por favor, revisa más tarde.");
+            return;
+        }
+
         // Validar si excede los disponibles
         if (cantidad > ticketsDisponibles) {
             alert(`Actualmente sólo hay ${ticketsDisponibles} boletos disponibles. Ingresa una cantidad válida y continúa con tu compra.`);

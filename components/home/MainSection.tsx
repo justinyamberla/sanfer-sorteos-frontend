@@ -17,7 +17,7 @@ export const MainSection = ({ actividad }) => {
     const vendidos = data?.boletos_vendidos || 0;
     const disponibles = data?.boletos_disponibles || 0;
     const generados = data?.boletos_generados || 0;
-    const porcentaje = vendidos > 0 ? (vendidos / generados) * 100 : 0;
+    const porcentaje = disponibles < generados ? ((generados - disponibles) / generados) * 100 : 1;
 
     if (!data) {
         return <NoActivitySection />

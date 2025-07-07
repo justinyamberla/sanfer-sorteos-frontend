@@ -1,11 +1,24 @@
 import { format } from "date-fns";
 import es from "date-fns/locale/es";
 import { Badge, Card, Col, Row, Button } from "react-bootstrap";
+import { approvePedido, cancelPedido } from "@/services/PedidoService";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import Loading from "@/components/Loading";
 
-export default function PedidoCard({ pedido }) {
+export default function PedidoCard({ pedido, onUpdate }) {
+
+    const [loading, setLoading] = useState(false);
+
     const {
         numero_pedido,
-        cliente,
+        cliente_nombres,
+        cliente_apellidos,
+        cliente_email,
+        cliente_telefono,
+        cliente_direccion,
+        cliente_ciudad,
+        cliente_provincia,
         fecha_pedido,
         fecha_pago,
         fecha_expiracion,
@@ -24,12 +37,48 @@ export default function PedidoCard({ pedido }) {
         switch (estado) {
             case "pendiente":
                 return "warning";
-            case "aprobado":
+            case "pagado":
                 return "success";
             default:
                 return "danger";
         }
     };
+
+    const aprobarPedido = async () => {
+        confirm("¿Estás seguro de aprobar este pedido?");
+
+        if (!confirm) return;
+
+        setLoading(true);
+        const res = await approvePedido(numero_pedido);
+
+        if (res.success) {
+            toast.success(res.message);
+            onUpdate();
+        } else {
+            toast.error(res.message || "Error al procesar el pedido");
+        }
+
+        setLoading(false);
+    }
+
+    const cancelarPedido = async () => {
+        if (!confirm("¿Estás seguro de cancelar este pedido?")) return;
+
+        setLoading(true);
+        const res = await cancelPedido(numero_pedido);
+
+        if (res.success) {
+            toast.success(res.message);
+            onUpdate();
+        } else {
+            toast.error(res.message || "Error al cancelar el pedido");
+        }
+
+        setLoading(false);
+    }
+
+    if (loading) return <Loading />;
 
     return (
         <Card className="mb-4 shadow bg-white border-0">
@@ -37,7 +86,7 @@ export default function PedidoCard({ pedido }) {
                 <Row className="mb-3">
                     <Col>
                         <Badge bg="dark" className="text-capitalize p-2">Actividad {actividad_id}</Badge>{" "}
-                        <Badge bg={getEstadoVariant()} className="text-capitalize text-dark p-2">
+                        <Badge bg={getEstadoVariant()} className="text-capitalize text-white p-2">
                             {estado}
                         </Badge>
                     </Col>
@@ -47,7 +96,7 @@ export default function PedidoCard({ pedido }) {
                     <Row>
                         <Col md={5}>
                             <p className="mb-1"><strong>Número de pedido:</strong> <strong className="text-primary">{numero_pedido}</strong></p>
-                            <p className="mb-1"><strong>Cliente:</strong> {cliente.nombres} {cliente.apellidos}</p>
+                            <p className="mb-1"><strong>Cliente:</strong> {cliente_nombres} {cliente_apellidos}</p>
                             <p className="mb-1"><strong>Fecha de pedido:</strong> {formatDate(fecha_pedido)}</p>
                             <p className="mb-1"><strong>Fecha de expiración:</strong> {formatDate(fecha_expiracion)}</p>
                             <p className="mb-1"><strong>Fecha de pago:</strong> {formatDate(fecha_pago)}</p>
@@ -64,8 +113,26 @@ export default function PedidoCard({ pedido }) {
                 </Row>
 
                 <div className="d-flex justify-content-end mt-3">
-                    <Button variant="danger" size="sm" className="text-white mx-2">Cancelar</Button>
-                    <Button variant="primary" size="sm" className="text-white mx-2">Aprobar</Button>
+                    {estado === "pendiente" && (
+                        <>
+                            <Button
+                                variant="danger"
+                                size="sm"
+                                className="text-white mx-2"
+                                onClick={cancelarPedido}
+                            >
+                                Cancelar
+                            </Button>
+                            <Button
+                                variant="primary"
+                                size="sm"
+                                className="text-white mx-2"
+                                onClick={aprobarPedido}
+                            >
+                                Aprobar
+                            </Button>
+                        </>
+                    )}
                 </div>
             </Card.Body>
         </Card>

@@ -20,37 +20,37 @@ export default function SummaryPage() {
                     <div className="card-body text-center">
                         <div className="mb-3 border-bottom pb-2">
                             <small className="fw-bold">Número de pedido:</small>
-                            <p className="text-danger fs-5 fw-bold mb-0">{formData.pedido.numeroPedido}</p>
+                            <p className="text-danger fs-5 fw-bold mb-0">{formData.numero_pedido}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Fecha:</small>
-                            <p className="mb-0">{formData.pedido.fecha}</p>
+                            <p className="mb-0">{formData.fecha_pedido}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Cliente:</small>
-                            <p className="mb-0">{formData.cliente.nombres} {formData.cliente.apellidos}</p>
+                            <p className="mb-0">{formData.nombres} {formData.apellidos}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Producto:</small>
-                            <p className="mb-0">{formData.pedido.producto}</p>
+                            <p className="mb-0">{formData.producto}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Cantidad:</small>
-                            <p className="mb-0">{formData.pedido.cantidad}</p>
+                            <p className="mb-0">{formData.cantidad_boletos}</p>
                         </div>
 
                         <div className="mb-3">
                             <small className="fw-bold">Método de pago:</small>
-                            <p className="mb-0 text-capitalize">{formData.pedido.metodoPago}</p>
+                            <p className="mb-0 text-capitalize">{formData.metodo_pago}</p>
                         </div>
 
                         <div>
                             <small className="fw-bold">Total:</small>
-                            <p className="mb-0 text-primary fs-5 fw-bold">${formData.pedido.total}</p>
+                            <p className="mb-0 text-primary fs-5 fw-bold">${formData.total}</p>
                         </div>
                     </div>
                 </div>
@@ -62,32 +62,32 @@ export default function SummaryPage() {
 
                         <div className="mb-2">
                             <small className="fw-bold">Nombre completo:</small>
-                            <p className="mb-0">{formData.cliente.nombres} {formData.cliente.apellidos}</p>
+                            <p className="mb-0">{formData.nombres} {formData.apellidos}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Dirección:</small>
-                            <p className="mb-0">{formData.cliente.direccion}</p>
+                            <p className="mb-0">{formData.direccion}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Ciudad:</small>
-                            <p className="mb-0">{formData.cliente.ciudad}</p>
+                            <p className="mb-0">{formData.ciudad}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Provincia:</small>
-                            <p className="mb-0">{formData.cliente.provincia}</p>
+                            <p className="mb-0">{formData.provincia}</p>
                         </div>
 
                         <div className="mb-2">
                             <small className="fw-bold">Teléfono:</small>
-                            <p className="mb-0">{formData.cliente.telefono}</p>
+                            <p className="mb-0">{formData.telefono}</p>
                         </div>
 
                         <div>
                             <small className="fw-bold">Correo electrónico:</small>
-                            <p className="mb-0">{formData.cliente.email}</p>
+                            <p className="mb-0">{formData.email}</p>
                         </div>
                     </div>
                 </div>

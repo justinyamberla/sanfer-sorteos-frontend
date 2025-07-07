@@ -27,6 +27,34 @@ export async function getPedidosOfActividadActual(actividadId: string | number, 
     }
 }
 
+export async function createPedidoOnline(formData: FormData) {
+    try {
+        const res = await fetch(`${BASE_URL_API}/pedidos/online`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+            cache: "no-store",
+        });
+
+        const data = await res.json();
+
+        return {
+            success: data.success ?? res.ok,
+            data: data.data ?? null,
+            message: data.message ?? "Operación exitosa",
+        };
+    } catch (error: any) {
+        console.error("Error en createPedidoOnline:", error);
+        return {
+            success: false,
+            data: null,
+            message: error.message || "Ocurrió un error inesperado",
+        };
+    }
+}
+
 export async function createPedidoOffline(formData: FormData) {
     try {
         const res = await fetch(`${BASE_URL_API}/pedidos/offline`, {
@@ -51,6 +79,68 @@ export async function createPedidoOffline(formData: FormData) {
             success: false,
             data: null,
             message: error.message || "Ocurrió un error inesperado",
+        };
+    }
+}
+
+export async function approvePedido(numeroPedido) {
+    try {
+        const res = await fetch(`${BASE_URL_API}/pedidos/${numeroPedido}/aprobar`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cache: "no-store",
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+            throw new Error(data.message || "No se pudo aprobar el pedido.");
+        }
+
+        return {
+            success: true,
+            data: data.data ?? null,
+            message: data.message ?? "Pedido aprobado exitosamente",
+        };
+    } catch (error: any) {
+        console.error("Error en approvePedido:", error);
+        return {
+            success: false,
+            data: null,
+            message: error.message || "Ocurrió un error inesperado al aprobar",
+        };
+    }
+}
+
+export async function cancelPedido(numeroPedido) {
+    try {
+        const res = await fetch(`${BASE_URL_API}/pedidos/${numeroPedido}/cancelar`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cache: "no-store",
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || data.success === false) {
+            throw new Error(data.message || "No se pudo cancelar el pedido.");
+        }
+
+        return {
+            success: true,
+            data: data.data ?? null,
+            message: data.message ?? "Pedido cancelado exitosamente",
+        };
+    } catch (error: any) {
+        console.error("Error en cancelPedido:", error);
+        return {
+            success: false,
+            data: null,
+            message: error.message || "Ocurrió un error inesperado al cancelar",
         };
     }
 }

@@ -56,6 +56,7 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
         e.preventDefault();
 
         setLoading(true);
+        console.log("Submitting form data:", formData);
         const response = await createActividad(formData);
 
         if (response.success) {
@@ -88,6 +89,7 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
                                 <Form.Control
                                     size="sm"
                                     type="text"
+                                    minLength={10}
                                     maxLength={100}
                                     value={formData.nombre}
                                     onChange={handleChange}
@@ -103,6 +105,7 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
                                 <Form.Control
                                     size="sm"
                                     type="text"
+                                    minLength={10}
                                     maxLength={100}
                                     value={formData.titulo}
                                     onChange={handleChange}
@@ -119,6 +122,7 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
                                 <Form.Control
                                     size="sm"
                                     as="textarea"
+                                    minLength={10}
                                     maxLength={500}
                                     value={formData.descripcion}
                                     onChange={handleChange}
