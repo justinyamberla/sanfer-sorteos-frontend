@@ -4,7 +4,7 @@ import React, {useState} from "react";
 import {useRouter} from "next/navigation";
 import {usePayment} from "@/context/PaymentContext";
 import {locations} from "@/lib/locations";
-import {createPedidoOffline, createPedidoOnline} from "@/services/PedidoService";
+import {createPedidoOffline, createPedidoOnline, prepareTransaction} from "@/services/PedidoService";
 import toast from "react-hot-toast";
 import Loading from "@/components/Loading";
 
@@ -14,8 +14,6 @@ export const PaymentInfoForm = () => {
     const {formData, setFormData} = usePayment();
 
     const [loading, setLoading] = useState(false);
-    const [pedidoData, setPedidoData] = useState(null); // token, amount, etc.
-    const [showPayModal, setShowPayModal] = useState(false);
     const selectedProvincia = locations.find((loc) => loc.provincia === formData?.provincia);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -77,11 +75,11 @@ export const PaymentInfoForm = () => {
             setLoading(false);
         } else {
             setLoading(true);
-            console.log("Enviando datos para crear pedido online:", formData);
-            const res = await createPedidoOnline(formData);
+            const res = await prepareTransaction(formData);
+            console.log("Respuesta de prepareTransaction:", res);
 
             if (res.success) {
-                const link = res.data?.payment_link.replace(/"/g, ""); // Por si llega con comillas
+                const link = res.data?.payphone.payWithCard.replace(/"/g, ""); // Por si llega con comillas
 
                 if (link) {
                     toast.success("Redirigiendo al link de pago...");
