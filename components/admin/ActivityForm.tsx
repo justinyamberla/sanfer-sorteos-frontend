@@ -19,6 +19,7 @@ import {deleteActividad, updateActividad} from "@/services/ActividadService";
 import toast from "react-hot-toast";
 import Loading from "@/components/Loading";
 import {filepondLoadHandler} from "@/utils/filepondHandler";
+import {formatDateForInput, formatDateTimeForInput} from "@/utils/dateUtils";
 
 registerPlugin(
     FilePondPluginImagePreview,
@@ -37,10 +38,10 @@ export const ActivityForm = ({ data, onSave }) => {
         nombre: data.nombre || "",
         titulo: data.titulo || "",
         descripcion: data.descripcion || "",
-        fecha_inicio: data.fecha_inicio.split(' ')[0] || "",
-        fecha_agotado: data.fecha_agotado?.split(' ')[0] || "",
-        fecha_sorteo: data.fecha_sorteo?.split(' ')[0] || "",
-        fecha_fin: data.fecha_fin?.split(' ')[0] || "",
+        fecha_inicio: data.fecha_inicio ? formatDateTimeForInput(data.fecha_inicio) : "",
+        fecha_agotado: data.fecha_agotado ? formatDateTimeForInput(data.fecha_agotado) : "",
+        fecha_sorteo: data.fecha_sorteo ? formatDateForInput(data.fecha_sorteo) : "",
+        fecha_fin: data.fecha_fin ? formatDateTimeForInput(data.fecha_fin) : "",
         url_live_sorteo: data.url_live_sorteo || "",
     }
 
@@ -221,13 +222,23 @@ export const ActivityForm = ({ data, onSave }) => {
                     <Col md={4} className="mb-2">
                         <Form.Group controlId="fecha_inicio">
                             <Form.Label className="fw-semibold">Fecha de inicio</Form.Label>
-                            <Form.Control size="sm" type="date" defaultValue={data.fecha_inicio ? data.fecha_inicio.split(' ')[0] : ''} disabled />
+                            <Form.Control
+                                size="sm"
+                                type="datetime-local"
+                                defaultValue={formData.fecha_inicio}
+                                disabled
+                            />
                         </Form.Group>
                     </Col>
                     <Col md={4} className="mb-2">
-                        <Form.Group controlId="fecha_fin">
+                        <Form.Group controlId="fecha_agotado">
                             <Form.Label className="fw-semibold">Fecha agotado</Form.Label>
-                            <Form.Control size="sm" type="date" defaultValue={data.fecha_fin ? data.fecha_fin.split(' ')[0] : ''} disabled />
+                            <Form.Control
+                                size="sm"
+                                type="datetime-local"
+                                defaultValue={formData.fecha_agotado}
+                                disabled
+                            />
                         </Form.Group>
                     </Col>
                 </Row>
@@ -240,7 +251,7 @@ export const ActivityForm = ({ data, onSave }) => {
                             <Form.Control
                                 size="sm"
                                 type="date"
-                                defaultValue={formData.fecha_sorteo || ""}
+                                defaultValue={formData.fecha_sorteo}
                                 onChange={handleChange}
                             />
                         </Form.Group>
@@ -251,7 +262,7 @@ export const ActivityForm = ({ data, onSave }) => {
                             <Form.Control
                                 size="sm"
                                 type="url"
-                                defaultValue={formData.url_live_sorteo || ""}
+                                defaultValue={formData.url_live_sorteo}
                                 onChange={handleChange}
                             />
                         </Form.Group>
