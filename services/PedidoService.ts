@@ -12,10 +12,11 @@ export async function getPedidosOfActividadActual(actividadId: string | number, 
         return {
             success: true,
             data: {
+                actividad: data.actividadExists ?? false,
                 pedidos: data.pedidos ?? [],
                 pagination: data.pagination,
             },
-            message: "Pedidos obtenidos exitosamente",
+            message: data.message,
         };
     } catch (error: any) {
         console.error("Error en getPedidosOfActividad:", error);
