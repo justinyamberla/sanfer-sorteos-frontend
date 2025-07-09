@@ -37,7 +37,10 @@ export const ActivityForm = ({ data, onSave }) => {
         nombre: data.nombre || "",
         titulo: data.titulo || "",
         descripcion: data.descripcion || "",
-        fecha_sorteo: data.fecha_sorteo || "",
+        fecha_inicio: data.fecha_inicio.split(' ')[0] || "",
+        fecha_agotado: data.fecha_agotado?.split(' ')[0] || "",
+        fecha_sorteo: data.fecha_sorteo?.split(' ')[0] || "",
+        fecha_fin: data.fecha_fin?.split(' ')[0] || "",
         url_live_sorteo: data.url_live_sorteo || "",
     }
 
@@ -116,10 +119,10 @@ export const ActivityForm = ({ data, onSave }) => {
     }
 
     return (
-        <div>
+        <div className="bg-white my-1 p-4 rounded shadow-sm small">
             <div className="mb-4 d-flex gap-2 align-items-center">
-                <Badge bg="dark">{formData.nombre}</Badge>
-                <Badge bg={data.estado === "activo" ? "primary" : "warning"} className="text-capitalize">{data.estado}</Badge>
+                <Badge bg="dark" className="p-2">{formData.nombre}</Badge>
+                <Badge bg={data.estado === "activo" ? "primary" : "warning"} className="text-capitalize p-2">{data.estado}</Badge>
             </div>
             <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
@@ -169,67 +172,6 @@ export const ActivityForm = ({ data, onSave }) => {
                 </Row>
 
                 <Row className="mb-3">
-                    <Col md={4}>
-                        <Form.Group controlId="fecha_inicio">
-                            <Form.Label className="fw-semibold">Fecha de inicio</Form.Label>
-                            <Form.Control size="sm" type="date" defaultValue={data.fecha_inicio} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="fecha_fin">
-                            <Form.Label className="fw-semibold">Fecha fin</Form.Label>
-                            <Form.Control size="sm" type="date" defaultValue={data.fecha_fin || ""} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="fecha_sorteo">
-                            <Form.Label className="fw-semibold">Fecha sorteo</Form.Label>
-                            <Form.Control
-                                size="sm"
-                                type="date"
-                                defaultValue={formData.fecha_sorteo || ""}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row className="mb-3">
-                    <Col md={4}>
-                        <Form.Group controlId="boletos_generados">
-                            <Form.Label className="fw-semibold">Total de boletos generados</Form.Label>
-                            <Form.Control size="sm" type="number" defaultValue={data.boletos_generados} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="boletos_ganadores">
-                            <Form.Label className="fw-semibold">Toal de boletos ganadores</Form.Label>
-                            <Form.Control size="sm" type="number" defaultValue={data.boletos_ganadores} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="precio_boleto">
-                            <Form.Label className="fw-semibold">Precio por boleto</Form.Label>
-                            <Form.Control size="sm" type="number" step="0.01" defaultValue={data.precio_boleto} disabled />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row className="mb-3">
-                    <Col md={12}>
-                        <Form.Group controlId="url_live_sorteo">
-                            <Form.Label className="fw-semibold">URL del sorteo en vivo</Form.Label>
-                            <Form.Control
-                                size="sm"
-                                type="url"
-                                defaultValue={formData.url_live_sorteo || ""}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row className="mb-3">
                     <Col md={12}>
                         <Form.Group controlId="imagenes" className="mb-4">
                             <Form.Label className="fw-semibold">Imágenes</Form.Label>
@@ -252,7 +194,71 @@ export const ActivityForm = ({ data, onSave }) => {
                     </Col>
                 </Row>
 
-                <div className="d-flex justify-content-between mt-4">
+                <hr />
+                <Row className="mb-4">
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="boletos_generados">
+                            <Form.Label className="fw-semibold">Total de boletos generados</Form.Label>
+                            <Form.Control size="sm" type="number" defaultValue={data.boletos_generados} disabled />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="boletos_ganadores">
+                            <Form.Label className="fw-semibold">Toal de boletos ganadores</Form.Label>
+                            <Form.Control size="sm" type="number" defaultValue={data.boletos_ganadores} disabled />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="precio_boleto">
+                            <Form.Label className="fw-semibold">Precio por boleto</Form.Label>
+                            <Form.Control size="sm" type="number" step="0.01" defaultValue={data.precio_boleto} disabled />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                <hr />
+                <Row className="mb-4">
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="fecha_inicio">
+                            <Form.Label className="fw-semibold">Fecha de inicio</Form.Label>
+                            <Form.Control size="sm" type="date" defaultValue={data.fecha_inicio ? data.fecha_inicio.split(' ')[0] : ''} disabled />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="fecha_fin">
+                            <Form.Label className="fw-semibold">Fecha agotado</Form.Label>
+                            <Form.Control size="sm" type="date" defaultValue={data.fecha_fin ? data.fecha_fin.split(' ')[0] : ''} disabled />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                <hr />
+                <Row className="mb-4">
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="fecha_sorteo">
+                            <Form.Label className="fw-semibold">Fecha sorteo</Form.Label>
+                            <Form.Control
+                                size="sm"
+                                type="date"
+                                defaultValue={formData.fecha_sorteo || ""}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={8} className="mb-2">
+                        <Form.Group controlId="url_live_sorteo">
+                            <Form.Label className="fw-semibold">URL del sorteo en vivo</Form.Label>
+                            <Form.Control
+                                size="sm"
+                                type="url"
+                                defaultValue={formData.url_live_sorteo || ""}
+                                onChange={handleChange}
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                <div className="d-flex justify-content-between mt-5">
                     <Button
                         size="sm"
                         variant="danger"

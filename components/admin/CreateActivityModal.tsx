@@ -31,13 +31,10 @@ registerPlugin(
 
 export default function CreateActivityModal({ show, onClose, onSuccess }: { show: boolean; onClose: () => void; }) {
 
-    const today = new Date();
-    const fechaHoy = today.toISOString().split("T")[0];
     const initialFormData = {
         nombre: '',
         titulo: '',
         descripcion: '',
-        fecha_inicio: fechaHoy,
         boletos_generados: '',
         boletos_ganadores: '',
         precio_boleto: '',

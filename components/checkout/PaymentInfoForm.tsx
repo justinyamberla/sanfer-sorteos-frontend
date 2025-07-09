@@ -44,7 +44,7 @@ export const PaymentInfoForm = () => {
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
+        
         if (!formData) {
             return alert("Por favor, completa el formulario antes de continuar.");
         }
