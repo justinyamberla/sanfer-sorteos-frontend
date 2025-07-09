@@ -8,7 +8,8 @@ import Pagination from "@/components/admin/Pagination";
 import Link from "next/link";
 
 export default function PedidosPage() {
-    const [pedidos, setPedidos] = useState([]);
+    const [data, setData] = useState<any>([]);
+    const [message, setMessage] = useState(null);
     const [pagination, setPagination] = useState(null);
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
@@ -18,7 +19,8 @@ export default function PedidosPage() {
             setLoading(true);
             const res = await getPedidosOfActividadActual(pagina);
             if (res.success) {
-                setPedidos(res.data.pedidos);
+                setMessage(res.message);
+                setData(res.data);
                 setPagination(res.data.pagination);
             }
         } catch (error) {
@@ -39,19 +41,21 @@ export default function PedidosPage() {
             <h4 className="fw-bold my-3">Pedidos</h4>
             <p className="small">Aquí puedes revisar los pedidos de la actividad en curso.</p>
 
-            {pedidos.length === 0 ? (
+            {data.pedidos.length === 0 ? (
                 <div className="bg-white my-4 p-4 rounded small">
                     <div className="text-center">
-                        <p>Aún no hay pedidos registrados para esta actividad.</p>
-                        <Link href="/admin" className="btn btn-sm btn-dark text-white">
-                            Crear actividad
-                        </Link>
+                        <p>{message}</p>
+                        {!data.actividad && (
+                            <Link href="/admin" className="btn btn-sm btn-dark text-white">
+                                Crear actividad
+                            </Link>
+                        )}
                     </div>
                 </div>
             ) : (
                 <>
                     <div className="grid gap-4 small">
-                        {pedidos.map((pedido) => (
+                        {data.map((pedido) => (
                             <PedidoCard key={pedido.id} pedido={pedido} onUpdate={fetchPedidos} />
                         ))}
                     </div>

@@ -31,7 +31,7 @@ export default function PedidoCard({ pedido, onUpdate }) {
     } = pedido;
 
     const formatDate = (dateString) =>
-        dateString ? format(new Date(dateString), "dd MMM yyyy, HH:mm", { locale: es }) : "N/A";
+        dateString ? format(new Date(dateString), "dd MMM yyyy, HH:mm:ss", { locale: es }) : "N/A";
 
     const getEstadoVariant = () => {
         switch (estado) {
