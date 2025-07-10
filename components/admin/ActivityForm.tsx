@@ -40,7 +40,7 @@ export const ActivityForm = ({ data, onSave }) => {
         descripcion: data.descripcion || "",
         fecha_inicio: data.fecha_inicio ? formatDateTimeForInput(data.fecha_inicio) : "",
         fecha_agotado: data.fecha_agotado ? formatDateTimeForInput(data.fecha_agotado) : "",
-        fecha_sorteo: data.fecha_sorteo ? formatDateForInput(data.fecha_sorteo) : "",
+        fecha_sorteo: data.fecha_sorteo ? formatDateTimeForInput(data.fecha_sorteo) : "",
         fecha_fin: data.fecha_fin ? formatDateTimeForInput(data.fecha_fin) : "",
         url_live_sorteo: data.url_live_sorteo || "",
     }
@@ -98,7 +98,7 @@ export const ActivityForm = ({ data, onSave }) => {
     };
 
     const handleDelete = async () => {
-        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta actividad? Esta acción no se puede deshacer.");
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta actividad? Esta acción no se puede deshacer. Se perderá toda la información de esta actividad como: boletos, pedidos y pagos.");
 
         if (!confirmDelete) return;
 
@@ -113,6 +113,25 @@ export const ActivityForm = ({ data, onSave }) => {
         }
 
         setLoading(false);
+    }
+
+    const handleFinish = async () => {
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres finalizar esta actividad? Esta acción no se puede deshacer. Se perderá toda la información de esta actividad como: boletos, pedidos y pagos.");
+
+        if (!confirmDelete) return;
+
+        console.log('Finalizada');
+        /*setLoading(true);
+        const response = await deleteActividad(data.id);
+
+        if (response.success) {
+            toast.success("Actividad eliminada exitosamente");
+            onSave(); // Callback para actualizar el estado en el componente padre
+        } else {
+            toast.error(response.message || "Error al eliminar actividad");
+        }
+
+        setLoading(false);*/
     }
 
     if (loading) {
@@ -205,7 +224,7 @@ export const ActivityForm = ({ data, onSave }) => {
                     </Col>
                     <Col md={4} className="mb-2">
                         <Form.Group controlId="boletos_ganadores">
-                            <Form.Label className="fw-semibold">Toal de boletos ganadores</Form.Label>
+                            <Form.Label className="fw-semibold">Total de boletos ganadores (premios instantáneos)</Form.Label>
                             <Form.Control size="sm" type="number" defaultValue={data.boletos_ganadores} disabled />
                         </Form.Group>
                     </Col>
@@ -245,14 +264,20 @@ export const ActivityForm = ({ data, onSave }) => {
 
                 <hr />
                 <Row className="mb-4">
+                    {data.estado === 'activo' && (
+                        <div className="form-text text-danger-emphasis text-opacity-75 mb-3">
+                            <i className="bi bi-exclamation-circle-fill me-2"></i>Esta sección se activará una vez que todos los boletos se agoten.
+                        </div>
+                    )}
                     <Col md={4} className="mb-2">
                         <Form.Group controlId="fecha_sorteo">
-                            <Form.Label className="fw-semibold">Fecha sorteo</Form.Label>
+                            <Form.Label className="fw-semibold">Fecha de sorteo</Form.Label>
                             <Form.Control
                                 size="sm"
-                                type="date"
+                                type="datetime-local"
                                 defaultValue={formData.fecha_sorteo}
                                 onChange={handleChange}
+                                disabled={!formData.fecha_agotado}
                             />
                         </Form.Group>
                     </Col>
@@ -264,22 +289,25 @@ export const ActivityForm = ({ data, onSave }) => {
                                 type="url"
                                 defaultValue={formData.url_live_sorteo}
                                 onChange={handleChange}
+                                disabled={!formData.fecha_agotado}
                             />
                         </Form.Group>
                     </Col>
                 </Row>
 
-                <div className="d-flex justify-content-between mt-5">
-                    <Button
-                        size="sm"
-                        variant="danger"
-                        className="text-white"
-                        onClick={handleDelete}
-                    >
-                        Eliminar actividad
-                    </Button>
-                    <div className="d-flex gap-2">
-                        <Button size="sm" variant="dark">Iniciar sorteo</Button>
+                <div className="d-flex flex-sm-column flex-md-row justify-content-between mt-5">
+                    <div className="d-flex gap-2 my-1">
+                        <Button
+                            size="sm"
+                            variant="danger"
+                            className="text-white"
+                            onClick={handleDelete}
+                        >
+                            Eliminar actividad
+                        </Button>
+                        <Button size="sm" variant="dark">Marcar como finalizada</Button>
+                    </div>
+                    <div className="d-flex justify-content-end gap-2 my-1">
                         <Button size="sm" variant="primary" className="text-white" type="submit">Guardar</Button>
                     </div>
                 </div>

@@ -147,7 +147,7 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
                         <Col md={4} className="mb-3">
                             <Form.Group controlId="boletos_ganadores">
                                 <Form.Label className="fw-semibold">
-                                    Total de boletos ganadores
+                                    Total de boletos ganadores (premios instantáneos)
                                 </Form.Label>
                                 <Form.Control
                                     size="sm"
