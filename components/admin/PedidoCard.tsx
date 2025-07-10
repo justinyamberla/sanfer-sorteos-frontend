@@ -28,6 +28,7 @@ export default function PedidoCard({ pedido, onUpdate }) {
         cantidad_boletos,
         estado,
         actividad_id,
+        actividad_nombre,
     } = pedido;
 
     const formatDate = (dateString) =>
@@ -85,7 +86,7 @@ export default function PedidoCard({ pedido, onUpdate }) {
             <Card.Body>
                 <Row className="mb-3">
                     <Col>
-                        <Badge bg="dark" className="text-capitalize p-2">Actividad {actividad_id}</Badge>{" "}
+                        <Badge bg="dark" className="text-capitalize p-2">{actividad_nombre}</Badge>{" "}
                         <Badge bg={getEstadoVariant()} className="text-capitalize text-white p-2">
                             {estado}
                         </Badge>

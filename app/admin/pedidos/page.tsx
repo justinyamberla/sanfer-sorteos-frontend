@@ -55,7 +55,7 @@ export default function PedidosPage() {
             ) : (
                 <>
                     <div className="grid gap-4 small">
-                        {data.map((pedido) => (
+                        {data.pedidos.map((pedido) => (
                             <PedidoCard key={pedido.id} pedido={pedido} onUpdate={fetchPedidos} />
                         ))}
                     </div>

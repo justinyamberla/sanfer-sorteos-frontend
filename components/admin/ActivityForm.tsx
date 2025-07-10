@@ -19,6 +19,7 @@ import {deleteActividad, updateActividad} from "@/services/ActividadService";
 import toast from "react-hot-toast";
 import Loading from "@/components/Loading";
 import {filepondLoadHandler} from "@/utils/filepondHandler";
+import {formatDateForInput, formatDateTimeForInput} from "@/utils/dateUtils";
 
 registerPlugin(
     FilePondPluginImagePreview,
@@ -37,7 +38,10 @@ export const ActivityForm = ({ data, onSave }) => {
         nombre: data.nombre || "",
         titulo: data.titulo || "",
         descripcion: data.descripcion || "",
-        fecha_sorteo: data.fecha_sorteo || "",
+        fecha_inicio: data.fecha_inicio ? formatDateTimeForInput(data.fecha_inicio) : "",
+        fecha_agotado: data.fecha_agotado ? formatDateTimeForInput(data.fecha_agotado) : "",
+        fecha_sorteo: data.fecha_sorteo ? formatDateTimeForInput(data.fecha_sorteo) : "",
+        fecha_fin: data.fecha_fin ? formatDateTimeForInput(data.fecha_fin) : "",
         url_live_sorteo: data.url_live_sorteo || "",
     }
 
@@ -94,7 +98,7 @@ export const ActivityForm = ({ data, onSave }) => {
     };
 
     const handleDelete = async () => {
-        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta actividad? Esta acción no se puede deshacer.");
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres eliminar esta actividad? Esta acción no se puede deshacer. Se perderá toda la información de esta actividad como: boletos, pedidos y pagos.");
 
         if (!confirmDelete) return;
 
@@ -111,15 +115,34 @@ export const ActivityForm = ({ data, onSave }) => {
         setLoading(false);
     }
 
+    const handleFinish = async () => {
+        const confirmDelete = window.confirm("¿Estás seguro de que quieres finalizar esta actividad? Esta acción no se puede deshacer. Se perderá toda la información de esta actividad como: boletos, pedidos y pagos.");
+
+        if (!confirmDelete) return;
+
+        console.log('Finalizada');
+        /*setLoading(true);
+        const response = await deleteActividad(data.id);
+
+        if (response.success) {
+            toast.success("Actividad eliminada exitosamente");
+            onSave(); // Callback para actualizar el estado en el componente padre
+        } else {
+            toast.error(response.message || "Error al eliminar actividad");
+        }
+
+        setLoading(false);*/
+    }
+
     if (loading) {
         return <Loading />;
     }
 
     return (
-        <div>
+        <div className="bg-white my-1 p-4 rounded shadow-sm small">
             <div className="mb-4 d-flex gap-2 align-items-center">
-                <Badge bg="dark">{formData.nombre}</Badge>
-                <Badge bg={data.estado === "activo" ? "primary" : "warning"} className="text-capitalize">{data.estado}</Badge>
+                <Badge bg="dark" className="p-2">{formData.nombre}</Badge>
+                <Badge bg={data.estado === "activo" ? "primary" : "warning"} className="text-capitalize p-2">{data.estado}</Badge>
             </div>
             <Form onSubmit={handleSubmit}>
                 <Row className="mb-3">
@@ -169,67 +192,6 @@ export const ActivityForm = ({ data, onSave }) => {
                 </Row>
 
                 <Row className="mb-3">
-                    <Col md={4}>
-                        <Form.Group controlId="fecha_inicio">
-                            <Form.Label className="fw-semibold">Fecha de inicio</Form.Label>
-                            <Form.Control size="sm" type="date" defaultValue={data.fecha_inicio} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="fecha_fin">
-                            <Form.Label className="fw-semibold">Fecha fin</Form.Label>
-                            <Form.Control size="sm" type="date" defaultValue={data.fecha_fin || ""} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="fecha_sorteo">
-                            <Form.Label className="fw-semibold">Fecha sorteo</Form.Label>
-                            <Form.Control
-                                size="sm"
-                                type="date"
-                                defaultValue={formData.fecha_sorteo || ""}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row className="mb-3">
-                    <Col md={4}>
-                        <Form.Group controlId="boletos_generados">
-                            <Form.Label className="fw-semibold">Total de boletos generados</Form.Label>
-                            <Form.Control size="sm" type="number" defaultValue={data.boletos_generados} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="boletos_ganadores">
-                            <Form.Label className="fw-semibold">Toal de boletos ganadores</Form.Label>
-                            <Form.Control size="sm" type="number" defaultValue={data.boletos_ganadores} disabled />
-                        </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                        <Form.Group controlId="precio_boleto">
-                            <Form.Label className="fw-semibold">Precio por boleto</Form.Label>
-                            <Form.Control size="sm" type="number" step="0.01" defaultValue={data.precio_boleto} disabled />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row className="mb-3">
-                    <Col md={12}>
-                        <Form.Group controlId="url_live_sorteo">
-                            <Form.Label className="fw-semibold">URL del sorteo en vivo</Form.Label>
-                            <Form.Control
-                                size="sm"
-                                type="url"
-                                defaultValue={formData.url_live_sorteo || ""}
-                                onChange={handleChange}
-                            />
-                        </Form.Group>
-                    </Col>
-                </Row>
-
-                <Row className="mb-3">
                     <Col md={12}>
                         <Form.Group controlId="imagenes" className="mb-4">
                             <Form.Label className="fw-semibold">Imágenes</Form.Label>
@@ -252,17 +214,100 @@ export const ActivityForm = ({ data, onSave }) => {
                     </Col>
                 </Row>
 
-                <div className="d-flex justify-content-between mt-4">
-                    <Button
-                        size="sm"
-                        variant="danger"
-                        className="text-white"
-                        onClick={handleDelete}
-                    >
-                        Eliminar actividad
-                    </Button>
-                    <div className="d-flex gap-2">
-                        <Button size="sm" variant="dark">Iniciar sorteo</Button>
+                <hr />
+                <Row className="mb-4">
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="boletos_generados">
+                            <Form.Label className="fw-semibold">Boletos generados</Form.Label>
+                            <Form.Control size="sm" type="number" defaultValue={data.boletos_generados} disabled />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="boletos_ganadores">
+                            <Form.Label className="fw-semibold">Boletos ganadores (premios instantáneos)</Form.Label>
+                            <Form.Control size="sm" type="number" defaultValue={data.boletos_ganadores} disabled />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="precio_boleto">
+                            <Form.Label className="fw-semibold">Precio por boleto</Form.Label>
+                            <Form.Control size="sm" type="number" step="0.01" defaultValue={data.precio_boleto} disabled />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                <hr />
+                <Row className="mb-4">
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="fecha_inicio">
+                            <Form.Label className="fw-semibold">Fecha de inicio</Form.Label>
+                            <Form.Control
+                                size="sm"
+                                type="datetime-local"
+                                defaultValue={formData.fecha_inicio}
+                                disabled
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="fecha_agotado">
+                            <Form.Label className="fw-semibold">Fecha agotado</Form.Label>
+                            <Form.Control
+                                size="sm"
+                                type="datetime-local"
+                                defaultValue={formData.fecha_agotado}
+                                disabled
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                <hr />
+                <Row className="mb-4">
+                    {data.estado === 'activo' && (
+                        <div className="form-text text-danger-emphasis text-opacity-75 mb-3">
+                            <i className="bi bi-exclamation-circle-fill me-2"></i>Esta sección se activará una vez que todos los boletos se agoten.
+                        </div>
+                    )}
+                    <Col md={4} className="mb-2">
+                        <Form.Group controlId="fecha_sorteo">
+                            <Form.Label className="fw-semibold">Fecha de sorteo</Form.Label>
+                            <Form.Control
+                                size="sm"
+                                type="datetime-local"
+                                defaultValue={formData.fecha_sorteo}
+                                onChange={handleChange}
+                                disabled={!formData.fecha_agotado}
+                            />
+                        </Form.Group>
+                    </Col>
+                    <Col md={8} className="mb-2">
+                        <Form.Group controlId="url_live_sorteo">
+                            <Form.Label className="fw-semibold">URL del sorteo en vivo</Form.Label>
+                            <Form.Control
+                                size="sm"
+                                type="url"
+                                defaultValue={formData.url_live_sorteo}
+                                onChange={handleChange}
+                                disabled={!formData.fecha_agotado}
+                            />
+                        </Form.Group>
+                    </Col>
+                </Row>
+
+                <div className="d-flex flex-sm-column flex-md-row justify-content-between mt-5">
+                    <div className="d-flex gap-2 my-1">
+                        <Button
+                            size="sm"
+                            variant="danger"
+                            className="text-white"
+                            onClick={handleDelete}
+                        >
+                            Eliminar actividad
+                        </Button>
+                        <Button size="sm" variant="dark">Marcar como finalizada</Button>
+                    </div>
+                    <div className="d-flex justify-content-end gap-2 my-1">
                         <Button size="sm" variant="primary" className="text-white" type="submit">Guardar</Button>
                     </div>
                 </div>

@@ -31,13 +31,10 @@ registerPlugin(
 
 export default function CreateActivityModal({ show, onClose, onSuccess }: { show: boolean; onClose: () => void; }) {
 
-    const today = new Date();
-    const fechaHoy = today.toISOString().split("T")[0];
     const initialFormData = {
         nombre: '',
         titulo: '',
         descripcion: '',
-        fecha_inicio: fechaHoy,
         boletos_generados: '',
         boletos_ganadores: '',
         precio_boleto: '',
@@ -136,7 +133,7 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
                         <Col md={4} className="mb-3">
                             <Form.Group controlId="boletos_generados">
                                 <Form.Label className="fw-semibold">
-                                    Total de boletos generados
+                                    Boletos generados
                                 </Form.Label>
                                 <Form.Control
                                     size="sm"
@@ -150,7 +147,7 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
                         <Col md={4} className="mb-3">
                             <Form.Group controlId="boletos_ganadores">
                                 <Form.Label className="fw-semibold">
-                                    Total de boletos ganadores
+                                    Boletos con premios instantáneos
                                 </Form.Label>
                                 <Form.Control
                                     size="sm"

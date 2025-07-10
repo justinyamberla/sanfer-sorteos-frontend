@@ -6,7 +6,7 @@ import LateralNavbar from "@/components/admin/LateralNavbar";
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     return (
         <div className="min-vh-100 w-100 container">
-            <Row className="h-100">
+            <Row className="h-100 mb-4">
                 <Col md={3} className="py-2">
                     <LateralNavbar />
                 </Col>

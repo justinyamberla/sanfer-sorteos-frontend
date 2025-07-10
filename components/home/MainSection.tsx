@@ -9,10 +9,12 @@ import InstructionsSection from "@/components/home/InstructionsSection";
 import TicketsPurchaseSection from "@/components/home/TicketsPurchaseSection";
 import AwardsSection from "@/components/home/AwardsSection";
 import TicketCheckSection from "@/components/home/TicketCheckSection";
+import SoldoutActivitySection from "@/components/home/SoldoutActivitySection";
 
 export const MainSection = ({ actividad }) => {
 
     const { data } = use(actividad);
+    console.log(data)
 
     const vendidos = data?.boletos_vendidos || 0;
     const disponibles = data?.boletos_disponibles || 0;
@@ -48,21 +50,28 @@ export const MainSection = ({ actividad }) => {
                             <small className="fw-semibold fs-6">Quedan {data.boletos_disponibles} boletos disponibles</small>
 
                             <div className="d-flex mt-5 gap-3">
-                                <a
-                                    type="button"
-                                    href="#instructionsSection"
-                                    className="btn btn-dark px-4 shadow"
-                                >
-                                    Comprar boletos
-                                </a>
-                                {data.url_live_sorteo && (
-                                    <button
-                                        className="btn btn-outline-primary px-4"
-                                        onClick={() => alert("Aún no se ha iniciado el sorteo")}
+                                {data?.estado === 'activo' && (
+                                    <a
+                                        type="button"
+                                        href="#instructionsSection"
+                                        className="btn btn-dark px-4 shadow"
                                     >
-                                        Ver sorteo
-                                    </button>
+                                        Comprar boletos
+                                    </a>
                                 )}
+                                {data.url_live_sorteo && (
+                                    <a
+                                        href={data.url_live_sorteo}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn btn-outline-danger d-inline-flex align-items-center gap-2 px-4 py-2 fw-bold"
+                                        style={{ fontSize: '1rem' }}
+                                    >
+                                        <span className="live-dot"></span>
+                                        Ver sorteo en vivo
+                                    </a>
+                                )}
+
                             </div>
                         </div>
 
@@ -81,13 +90,23 @@ export const MainSection = ({ actividad }) => {
                         </div>
                     </div>
                 </div>
-                {data?.fecha_fin && isToday(data.fecha_fin) && (
-                    <FinishedActivitySection />
-                )}
             </section>
 
-            <InstructionsSection />
-            <TicketsPurchaseSection ticketsDisponibles={disponibles} price={data.precio_boleto} />
+            {data?.estado && data.estado === 'agotado' && (
+                <SoldoutActivitySection fecha_sorteo={data?.fecha_sorteo} />
+            )}
+
+            {data?.estado && data.estado === 'finalizado' && (
+                <FinishedActivitySection />
+            )}
+
+            {data?.estado && data.estado === 'activo' && (
+                <>
+                    <InstructionsSection />
+                    <TicketsPurchaseSection ticketsDisponibles={disponibles} price={data.precio_boleto} />
+                </>
+            )}
+
             <AwardsSection tickets={data.lista_boletos_ganadores} />
             <TicketCheckSection />
         </>
