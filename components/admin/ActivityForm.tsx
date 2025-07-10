@@ -218,13 +218,13 @@ export const ActivityForm = ({ data, onSave }) => {
                 <Row className="mb-4">
                     <Col md={4} className="mb-2">
                         <Form.Group controlId="boletos_generados">
-                            <Form.Label className="fw-semibold">Total de boletos generados</Form.Label>
+                            <Form.Label className="fw-semibold">Boletos generados</Form.Label>
                             <Form.Control size="sm" type="number" defaultValue={data.boletos_generados} disabled />
                         </Form.Group>
                     </Col>
                     <Col md={4} className="mb-2">
                         <Form.Group controlId="boletos_ganadores">
-                            <Form.Label className="fw-semibold">Total de boletos ganadores (premios instantáneos)</Form.Label>
+                            <Form.Label className="fw-semibold">Boletos ganadores (premios instantáneos)</Form.Label>
                             <Form.Control size="sm" type="number" defaultValue={data.boletos_ganadores} disabled />
                         </Form.Group>
                     </Col>
