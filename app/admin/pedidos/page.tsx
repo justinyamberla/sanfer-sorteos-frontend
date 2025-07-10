@@ -41,7 +41,7 @@ export default function PedidosPage() {
             <h4 className="fw-bold my-3">Pedidos</h4>
             <p className="small">Aquí puedes revisar los pedidos de la actividad en curso.</p>
 
-            {data.pedidos.length === 0 ? (
+            {data.pedidos.length === 0 || data.estado == 'eliminado' ? (
                 <div className="bg-white my-4 p-4 rounded small">
                     <div className="text-center">
                         <p>{message}</p>

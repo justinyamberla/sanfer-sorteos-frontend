@@ -21,7 +21,7 @@ export const MainSection = ({ actividad }) => {
     const generados = data?.boletos_generados || 0;
     const porcentaje = disponibles < generados ? ((generados - disponibles) / generados) * 100 : 1;
 
-    if (!data) {
+    if (!data || data.estado === 'eliminado') {
         return <NoActivitySection />
     }
 
