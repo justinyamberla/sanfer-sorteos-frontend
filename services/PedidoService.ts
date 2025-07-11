@@ -1,7 +1,7 @@
 import { BASE_URL_API } from "@/lib/baseUrl";
 import { FormData } from "@/lib/types";
 
-export async function getPedidosOfActividadActual(actividadId: string | number, page = 1) {
+export async function getPedidosOfActividadActual(page) {
     try {
         const res = await fetch(`${BASE_URL_API}/actividades/actual/pedidos?page=${page}`, {
             method: "GET",

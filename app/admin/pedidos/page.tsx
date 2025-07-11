@@ -14,10 +14,10 @@ export default function PedidosPage() {
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
 
-    const fetchPedidos = async (pagina = 1) => {
+    const fetchPedidos = async () => {
         try {
             setLoading(true);
-            const res = await getPedidosOfActividadActual(pagina);
+            const res = await getPedidosOfActividadActual(page);
             if (res.success) {
                 setMessage(res.message);
                 setData(res.data);
@@ -31,7 +31,8 @@ export default function PedidosPage() {
     };
 
     useEffect(() => {
-        fetchPedidos(page);
+        console.log("Cargando pedidos para la página:", page);
+        fetchPedidos();
     }, [page]);
 
     if (loading) return <Loading />;

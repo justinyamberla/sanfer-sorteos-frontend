@@ -7,7 +7,7 @@ export default function Pagination({ pagination, onPageChange }) {
         <div className="d-flex justify-content-end align-items-center mt-4 mb-4">
             <ButtonGroup size="sm">
                 <Button
-                    variant="outline-secondary"
+                    variant="secondary"
                     onClick={() => onPageChange(current_page - 1)}
                     disabled={current_page <= 1}
                 >
@@ -19,7 +19,7 @@ export default function Pagination({ pagination, onPageChange }) {
                 </Button>
 
                 <Button
-                    variant="outline-secondary"
+                    variant="secondary"
                     onClick={() => onPageChange(current_page + 1)}
                     disabled={current_page >= last_page}
                 >
