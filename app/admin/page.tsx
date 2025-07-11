@@ -37,13 +37,7 @@ export const AdminHome = () => {
       <div>
           <h4 className="fw-bold my-3">Actividad actual</h4>
           <p className="small">Aquí puedes revisar y editar la información de la actividad en curso.</p>
-          {data && data.boletos_vendidos === data.boletos_generados && (
-              <Alert variant="info" dismissible className="small">
-                  <i className="bi bi-exclamation-circle-fill me-2 fs-6"></i>
-                  ¡Atención! Todos los boletos han sido vendidos, ya puedes proceder a establecer una fecha para realizar el sorteo.
-              </Alert>
-          )}
-          {!data || data.length === 0 ? (
+          {!data || data.length === 0 || data.estado === 'eliminado' ? (
               <div className="text-center bg-white my-4 p-4 rounded small">
                   <p>Aún no se ha creado una actividad.</p>
                   <button
@@ -55,6 +49,12 @@ export const AdminHome = () => {
               </div>
           ) : (
               <>
+                  {data && data.boletos_vendidos === data.boletos_generados && (
+                      <Alert variant="info" dismissible className="small">
+                          <i className="bi bi-exclamation-circle-fill me-2 fs-6"></i>
+                          ¡Atención! Todos los boletos han sido vendidos, ya puedes proceder a establecer una fecha para realizar el sorteo.
+                      </Alert>
+                  )}
                   <ActivitySummary
                       disponibles={data.boletos_disponibles}
                       reservados={data.boletos_reservados}

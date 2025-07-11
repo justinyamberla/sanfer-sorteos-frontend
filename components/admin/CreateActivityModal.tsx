@@ -54,6 +54,13 @@ export default function CreateActivityModal({ show, onClose, onSuccess }: { show
 
         setLoading(true);
         console.log("Submitting form data:", formData);
+
+        if (formData.boletos_generados <= formData.boletos_ganadores) {
+            toast.error("El número de boletos ganadores no puede ser mayor o igual que el número de boletos generados");
+            setLoading(false);
+            return;
+        }
+
         const response = await createActividad(formData);
 
         if (response.success) {
