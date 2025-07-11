@@ -223,7 +223,7 @@ export async function cancelTransaction(clientTxId: string) {
         return {
             success: data.success ?? res.ok,
             data: data.data ?? null,
-            message: data.message ?? "Cancelación exitosa",
+            message: data.message ?? "Operación exitosa",
         };
     } catch (error: any) {
         console.error("Error en cancelTransaction:", error);
@@ -235,5 +235,32 @@ export async function cancelTransaction(clientTxId: string) {
     }
 }
 
+export async function getPedidoByMail(correo: string) {
+    try {
+        const res = await fetch(`${BASE_URL_API}/pedidos/actual/correo`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            cache: "no-store",
+            body: JSON.stringify({ email: correo }),
+        });
+
+        const data = await res.json();
+
+        return {
+            success: data.success ?? res.ok,
+            data: data.data ?? null,
+            message: data.message ?? "Operación exitosa.",
+        };
+    } catch (error: any) {
+        console.error("Error en getPedidoByMail:", error);
+        return {
+            success: false,
+            data: null,
+            message: error.message || "Ocurrió un error inesperado al obtener el pedido por correo",
+        };
+    }
+}
 
 
